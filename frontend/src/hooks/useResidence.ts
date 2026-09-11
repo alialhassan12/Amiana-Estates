@@ -5,9 +5,10 @@ export const residenceKeys={
     all:['residences'],
 }
 
-export const useGetResidence=()=>{
+export const useGetResidence=(enabled:boolean=true)=>{
     return useQuery({
         queryKey:residenceKeys.all,
         queryFn:()=> getResidence(),
+        enabled
     })
 }

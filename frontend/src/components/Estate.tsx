@@ -1,9 +1,11 @@
 import image from "../assets/images/estate2.jpeg"
 import { useGetEstate } from "../hooks/useEstate";
+import { useInView } from "../hooks/useInView";
 
 const Estate=()=>{
+    const { ref, isInView } = useInView<HTMLDivElement>({ rootMargin: "250px" });
 
-    const {data:estate}=useGetEstate();
+    const {data:estate}=useGetEstate(isInView);
 
     const stats=[
         {
@@ -21,7 +23,7 @@ const Estate=()=>{
     ];
 
     return(
-        <div className="flex flex-col gap-5 py-10">
+        <div ref={ref} className="flex flex-col gap-5 py-10">
             {/* heading */}
             <div className="flex flex-col gap-2 ">
                 <p data-aos="fade-up" className="text-primary tracking-wider uppercase text-sm font-normal">

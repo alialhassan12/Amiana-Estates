@@ -1,17 +1,21 @@
 import { ArrowRight } from "lucide-react";
 import { useGetResidence } from "../hooks/useResidence";
 import PropertyTypeCard from "./PropertyTypeCard";
+import { useInView } from "../hooks/useInView";
 
 const Residences=()=>{
 
-    const {data}=useGetResidence();
+    const { ref, isInView } = useInView<HTMLDivElement>({ rootMargin: "250px" });
+    
+
+    const {data}=useGetResidence(isInView);
     console.log(data);
     const residence=data?.residence;
     const featuredProperty=data?.featuredProperty;    
     const propertyTypes=data?.propertyTypes;
 
     return(
-        <div className="flex flex-col gap-5 py-10">
+        <div ref={ref} className="flex flex-col gap-5 py-10">
             {/* heading */}
             <div className="flex flex-col gap-2 ">
                 <p data-aos="fade-up" className="text-primary tracking-wider uppercase text-sm font-normal">
@@ -57,8 +61,9 @@ const Residences=()=>{
                     </div>
 
                     {/* discover button */}
-                    <button className="flex flex-row items-center gap-2 tracking-widest text-sm uppercase mt-8 px-3 py-4 bg-black text-white hover:bg-primary transition-all duration-300 cursor-pointer">
-                        Discover {featuredProperty?.title} <ArrowRight color="#fff" size={24}/>
+                    <button className="flex flex-row items-center gap-2 tracking-widest text-sm uppercase mt-8 px-3 py-4 bg-black text-white hover:bg-primary transition-all duration-300 cursor-pointer group/discover-btn">
+                        Discover {featuredProperty?.title} 
+                        <ArrowRight size={24} className="group-hover/discover-btn:translate-x-1 transition-transform duration-300"/>
                     </button>
                 </div>
             </div>

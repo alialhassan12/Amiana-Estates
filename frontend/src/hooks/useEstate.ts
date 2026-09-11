@@ -5,9 +5,10 @@ export const estateKeys={
     all:['estate']
 }
 
-export const useGetEstate=()=>{
+export const useGetEstate=(enabled:boolean=true)=>{
     return useQuery({
         queryKey:estateKeys.all,
-        queryFn:()=>getEstate()
+        queryFn:()=>getEstate(),
+        enabled
     });
 }
