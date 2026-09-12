@@ -15,7 +15,7 @@ const Residences=()=>{
     const propertyTypes=data?.propertyTypes;
 
     return(
-        <div ref={ref} className="flex flex-col gap-5 py-10">
+        <div ref={ref} className="flex flex-col gap-5 py-10 mt-20">
             {/* heading */}
             <div className="flex flex-col gap-2 ">
                 <p data-aos="fade-up" className="text-primary tracking-wider uppercase text-sm font-normal">

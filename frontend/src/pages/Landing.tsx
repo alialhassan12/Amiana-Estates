@@ -2,6 +2,7 @@ import NavBar from "../components/NavBar";
 import Hero from "../components/Hero";
 import Estate from "../components/Estate";
 import Residences from "../components/Residences";
+import Penthouse from "../components/Penthouse";
 
 const Landing = () => {
     return (
@@ -18,6 +19,9 @@ const Landing = () => {
                     <div id="residences">
                         <Residences/>
                     </div>
+                </div>
+                <div id="penthouse" className="bg-black">
+                    <Penthouse/>
                 </div>
             </div>
         </div>
