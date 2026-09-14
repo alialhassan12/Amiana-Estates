@@ -17,7 +17,7 @@ const Penthouse = () => {
     }
 
     return (
-        <div ref={ref} className="flex flex-col px-10 py-10 mt-10 text-white">
+        <div ref={ref} className="flex flex-col px-10 py-20 mt-10 text-white">
             {/* heading */}
             <div className="flex flex-col gap-2 ">
                 <p data-aos="fade-up" className="text-primary tracking-wider uppercase text-sm font-normal">

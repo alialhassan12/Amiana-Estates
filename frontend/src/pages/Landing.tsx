@@ -4,6 +4,7 @@ import Estate from "../components/Estate";
 import Residences from "../components/Residences";
 import Penthouse from "../components/Penthouse";
 import { Button } from "../components/ui/button";
+import EstateExperience from "../components/EstateExperience";
 
 const Landing = () => {
     return (
@@ -23,6 +24,11 @@ const Landing = () => {
                 </div>
                 <div id="penthouse" className="bg-black">
                     <Penthouse/>
+                </div>
+                <div className="px-10">
+                    <div id="estate-experience">
+                        <EstateExperience/>
+                    </div>
                 </div>
             </div>
         </div>

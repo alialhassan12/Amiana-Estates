@@ -23,6 +23,7 @@ const Gallery: React.FC<GalleryProps> = ({ media = [], className = "" }) => {
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
     const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
+    const isFirstRender = useRef(true);
     const thumbnailsRef = useRef<HTMLDivElement>(null);
     const carouselContainerRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +35,7 @@ const Gallery: React.FC<GalleryProps> = ({ media = [], className = "" }) => {
     const getPlateData = useCallback((item: MediaItem, index: number) => {
         return {
             url: item.media_url || item.media_path || "",
-            title: item.title,
+            title: item.title || "",
             description: item.description,
             plateNum: padZero(index + 1),
             totalNum: padZero(totalPlates),
@@ -62,18 +63,6 @@ const Gallery: React.FC<GalleryProps> = ({ media = [], className = "" }) => {
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, [handlePrev, handleNext, isLightboxOpen]);
 
-    // Auto-scroll active thumbnail into view
-    useEffect(() => {
-        if (!thumbnailsRef.current) return;
-        const activeThumb = thumbnailsRef.current.children[activeIndex] as HTMLElement;
-        if (activeThumb) {
-            activeThumb.scrollIntoView({
-                behavior: "smooth",
-                inline: "center",
-                block: "nearest",
-            });
-        }
-    }, [activeIndex]);
 
     // Touch swipe handlers
     const handleTouchStart = (e: React.TouchEvent) => {

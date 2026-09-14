@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
 ])]
 class PropertyFeature extends Model
 {
-    
     public function propertyType(){
         return $this->belongsTo(PropertyType::class);
     }

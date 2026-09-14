@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\EstateController;
+use App\Http\Controllers\Api\EstateExperienceController;
+use App\Http\Controllers\Api\ExperienceSpecificationController;
 use App\Http\Controllers\Api\HeroController;
 use App\Http\Controllers\Api\PenthousesController;
 use App\Http\Controllers\Api\PropertyController;
@@ -28,3 +30,10 @@ Route::get('/residences',[ResidencesController::class,'getResidences'])->name('r
 Route::post('/penthouse/create',[PenthousesController::class,'insert'])->name('penthouse.create');
 Route::post('/penthouse/media/insert',[PenthousesController::class,'insertPenthouseMedia'])->name('penthouse.media.insert');
 Route::get('/penthouse',[PenthousesController::class,'getPenthouse'])->name('penthouse.get');
+
+// Estate Experience
+Route::post('/estate-experience/create',[EstateExperienceController::class,'insert'])->name('estate.experience.create');
+Route::get('/estate-experience',[EstateExperienceController::class,'getEstateExperience'])->name('estate.experience.get');
+
+// Estate Experience Specifications
+Route::post('/estate-experience-specification/create',[ExperienceSpecificationController::class,'insert'])->name('estate.experience.specification.create');
