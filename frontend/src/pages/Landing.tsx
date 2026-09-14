@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import Estate from "../components/Estate";
 import Residences from "../components/Residences";
 import Penthouse from "../components/Penthouse";
+import { Button } from "../components/ui/button";
 
 const Landing = () => {
     return (
