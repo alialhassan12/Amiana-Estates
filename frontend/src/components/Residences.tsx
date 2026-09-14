@@ -2,19 +2,21 @@ import { ArrowRight } from "lucide-react";
 import { useGetResidence } from "../hooks/useResidence";
 import PropertyTypeCard from "./PropertyTypeCard";
 import { useInView } from "../hooks/useInView";
+import { Skeleton } from "./ui/skeleton";
 
-const Residences=()=>{
-
+const Residences = () => {
     const { ref, isInView } = useInView<HTMLDivElement>({ rootMargin: "250px" });
-    
 
-    const {data}=useGetResidence(isInView);
-    console.log(data);
-    const residence=data?.residence;
-    const featuredProperty=data?.featuredProperty;    
-    const propertyTypes=data?.propertyTypes;
+    const { data, isPending } = useGetResidence(isInView);
+    const residence = data?.residence;
+    const featuredProperty = data?.featuredProperty;    
+    const propertyTypes = data?.propertyTypes;
 
-    return(
+    if (isPending) {
+        return <ResidencesSkeleton ref={ref} />;
+    }
+
+    return (
         <div ref={ref} className="flex flex-col gap-5 py-10 mt-20">
             {/* heading */}
             <div className="flex flex-col gap-2 ">
@@ -46,8 +48,8 @@ const Residences=()=>{
                     </p>
                     {/* features */}
                     <div className="flex flex-col mt-4 gap-3 w-full">
-                        {featuredProperty?.features?.map((feature)=>{
-                            return(
+                        {featuredProperty?.features?.map((feature: any) => {
+                            return (
                                 <div key={feature.id} className="flex flex-row items-center justify-between">
                                     <p className="body-text text-[#504C51] font-semibold text-xs">
                                         {feature?.title}
@@ -56,28 +58,103 @@ const Residences=()=>{
                                         {feature?.value}
                                     </p>
                                 </div>
-                            )
+                            );
                         })}
                     </div>
 
                     {/* discover button */}
                     <button className="flex flex-row items-center gap-2 tracking-widest text-sm uppercase mt-8 px-3 py-4 bg-black text-white hover:bg-primary transition-all duration-300 cursor-pointer group/discover-btn">
                         Discover {featuredProperty?.title} 
-                        <ArrowRight size={24} className="group-hover/discover-btn:translate-x-1 transition-transform duration-300"/>
+                        <ArrowRight size={24} className="group-hover/discover-btn:translate-x-1 transition-transform duration-300" />
                     </button>
                 </div>
             </div>
 
             {/* Property tyes */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 ">
-                {propertyTypes?.map((type)=>{
-                    return(
-                        <PropertyTypeCard key={type.id} propertyType={type}/>
-                    )
+                {propertyTypes?.map((type: any) => {
+                    return (
+                        <PropertyTypeCard key={type.id} propertyType={type} />
+                    );
                 })}
             </div>
         </div>
     );
-}
+};
 
 export default Residences;
+
+const ResidencesSkeleton = ({ ref }: { ref?: React.Ref<HTMLDivElement> }) => {
+    return (
+        <div ref={ref} className="flex flex-col gap-5 py-10 mt-20 w-full animate-pulse">
+            {/* heading skeleton */}
+            <div className="flex flex-col gap-2">
+                <Skeleton className="h-4 w-32 bg-primary/25" />
+                <div className="w-full md:w-1/2 space-y-3">
+                    <Skeleton className="h-10 sm:h-12 w-4/5 bg-neutral-200 dark:bg-neutral-800" />
+                    <Skeleton className="h-10 sm:h-12 w-3/5 bg-neutral-200 dark:bg-neutral-800" />
+                </div>
+            </div>
+
+            {/* featured property skeleton */}
+            <div className="w-full flex flex-col lg:flex-row items-center gap-10 pb-10 pr-0 lg:pr-20 bg-[#F4F3F0] dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800/60">
+                <div className="w-full lg:max-w-[60%] h-[360px] sm:h-[450px] lg:h-[550px] overflow-hidden">
+                    <Skeleton className="w-full h-full rounded-none bg-neutral-300/80 dark:bg-neutral-800" />
+                </div>
+                <div className="flex flex-1 flex-col items-start gap-4 p-6 lg:p-0 w-full">
+                    <Skeleton className="h-3 w-28 bg-primary/30" />
+                    <Skeleton className="h-8 w-3/4 bg-neutral-300 dark:bg-neutral-800" />
+                    <Skeleton className="h-6 w-1/2 bg-neutral-300 dark:bg-neutral-800" />
+                    
+                    <div className="w-full space-y-2 mt-2">
+                        <Skeleton className="h-3.5 w-full bg-neutral-300 dark:bg-neutral-800" />
+                        <Skeleton className="h-3.5 w-11/12 bg-neutral-300 dark:bg-neutral-800" />
+                        <Skeleton className="h-3.5 w-4/5 bg-neutral-300 dark:bg-neutral-800" />
+                    </div>
+
+                    {/* features skeleton */}
+                    <div className="flex flex-col mt-4 gap-3 w-full">
+                        {[1, 2, 3, 4].map((item) => (
+                            <div key={item} className="flex flex-row items-center justify-between">
+                                <Skeleton className="h-3 w-24 bg-neutral-300 dark:bg-neutral-800" />
+                                <Skeleton className="h-3 w-16 bg-neutral-300 dark:bg-neutral-800" />
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* discover button skeleton */}
+                    <Skeleton className="h-12 w-48 bg-neutral-900/80 dark:bg-neutral-700 mt-6 rounded-none" />
+                </div>
+            </div>
+
+            {/* Property types grid skeleton */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                {[1, 2].map((card) => (
+                    <div key={card} className="flex flex-col items-center bg-[#F4F3F0] dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800/60">
+                        <div className="w-full h-[380px] sm:h-[500px] overflow-hidden">
+                            <Skeleton className="w-full h-full rounded-none bg-neutral-300/80 dark:bg-neutral-800" />
+                        </div>
+                        <div className="flex flex-col items-start w-full py-5 px-6 sm:px-10 gap-4">
+                            <Skeleton className="h-3 w-24 bg-primary/30" />
+                            <Skeleton className="h-7 w-3/4 bg-neutral-300 dark:bg-neutral-800" />
+                            <Skeleton className="h-5 w-1/2 bg-neutral-300 dark:bg-neutral-800" />
+                            <div className="w-full space-y-2">
+                                <Skeleton className="h-3.5 w-full bg-neutral-300 dark:bg-neutral-800" />
+                                <Skeleton className="h-3.5 w-4/5 bg-neutral-300 dark:bg-neutral-800" />
+                            </div>
+                            <div className="flex flex-col mt-4 gap-3 w-full">
+                                {[1, 2, 3].map((f) => (
+                                    <div key={f} className="flex flex-row items-center justify-between">
+                                        <Skeleton className="h-3 w-20 bg-neutral-300 dark:bg-neutral-800" />
+                                        <Skeleton className="h-3 w-16 bg-neutral-300 dark:bg-neutral-800" />
+                                    </div>
+                                ))}
+                            </div>
+                            <Skeleton className="h-8 w-40 bg-neutral-300 dark:bg-neutral-800 mt-4 rounded-none" />
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
