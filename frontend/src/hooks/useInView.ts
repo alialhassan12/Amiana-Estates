@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 interface UseInViewOptions {
-    /** 
-     * Distance before the element enters the viewport to trigger fetch (e.g. '200px' pre-fetches before user actually reaches it)
-     */
+    // Distance before the element enters the viewport to trigger fetch
     rootMargin?: string;
 }
 
