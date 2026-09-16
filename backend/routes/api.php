@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EstateController;
 use App\Http\Controllers\Api\EstateExperienceController;
 use App\Http\Controllers\Api\ExperienceSpecificationController;
@@ -12,28 +13,50 @@ use App\Http\Controllers\Api\ResidencesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/hero/create',[HeroController::class,'insert'])->name('hero.create');
+// public routes
+Route::post('/login',[AuthController::class,'login'])->name('login');
+// hero
 Route::get('/hero',[HeroController::class,'getHero'])->name('hero.get');
-
-Route::post('/estate/create',[EstateController::class,'insert'])->name('estate.create');
+// estate
 Route::get('/estate',[EstateController::class,'getEstate'])->name('estate.get');
-
-Route::post('/property/types/create',[PropertyTypesController::class,'insert'])->name('property.types.create');
-Route::post('/property/create',[PropertyController::class,'insert'])->name('property.create');
-
-Route::post('/property/features/create',[PropertyFeaturesController::class,'insert'])->name('property.features.create');
-
-Route::post('/residences/create',[ResidencesController::class,'insert'])->name('residence.create');
+// residences 
 Route::get('/residences',[ResidencesController::class,'getResidences'])->name('residence.get');
-
 // Penthouses
-Route::post('/penthouse/create',[PenthousesController::class,'insert'])->name('penthouse.create');
-Route::post('/penthouse/media/insert',[PenthousesController::class,'insertPenthouseMedia'])->name('penthouse.media.insert');
 Route::get('/penthouse',[PenthousesController::class,'getPenthouse'])->name('penthouse.get');
-
 // Estate Experience
-Route::post('/estate-experience/create',[EstateExperienceController::class,'insert'])->name('estate.experience.create');
 Route::get('/estate-experience',[EstateExperienceController::class,'getEstateExperience'])->name('estate.experience.get');
 
-// Estate Experience Specifications
-Route::post('/estate-experience-specification/create',[ExperienceSpecificationController::class,'insert'])->name('estate.experience.specification.create');
+// protected routes
+Route::middleware('auth:sanctum')->group(function(){
+    Route::post('/logout',[AuthController::class,'logout'])->name('logout');
+    Route::get('/auth/check',[AuthController::class,'checkAuth'])->name('check.auth');
+
+    // hero
+    Route::post('/hero/create',[HeroController::class,'insert'])->name('hero.create');
+    
+    //estate 
+    Route::post('/estate/create',[EstateController::class,'insert'])->name('estate.create');
+    
+    // property types
+    Route::post('/property/types/create',[PropertyTypesController::class,'insert'])->name('property.types.create');
+    
+    // property
+    Route::post('/property/create',[PropertyController::class,'insert'])->name('property.create');
+
+    // property features
+    Route::post('/property/features/create',[PropertyFeaturesController::class,'insert'])->name('property.features.create');
+    
+    // residences
+    Route::post('/residences/create',[ResidencesController::class,'insert'])->name('residence.create');
+
+    // penthouse
+    Route::post('/penthouse/create',[PenthousesController::class,'insert'])->name('penthouse.create');
+    // penthouse media
+    Route::post('/penthouse/media/insert',[PenthousesController::class,'insertPenthouseMedia'])->name('penthouse.media.insert');
+    
+    // estate experience
+    Route::post('/estate-experience/create',[EstateExperienceController::class,'insert'])->name('estate.experience.create');
+    
+    // Estate Experience Specifications
+    Route::post('/estate-experience-specification/create',[ExperienceSpecificationController::class,'insert'])->name('estate.experience.specification.create');
+});
