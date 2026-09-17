@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\EstateController;
 use App\Http\Controllers\Api\EstateExperienceController;
 use App\Http\Controllers\Api\ExperienceSpecificationController;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 // public routes
 Route::post('/login',[AuthController::class,'login'])->name('login');
+// Route::post('/register',[AuthController::class,'register'])->name('register');
 // hero
 Route::get('/hero',[HeroController::class,'getHero'])->name('hero.get');
 // estate
@@ -30,9 +32,13 @@ Route::get('/estate-experience',[EstateExperienceController::class,'getEstateExp
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout',[AuthController::class,'logout'])->name('logout');
     Route::get('/auth/check',[AuthController::class,'checkAuth'])->name('check.auth');
-
+    
+    // dashboard
+    Route::get('/dashboard',[DashboardController::class,'getDashboardStats'])->name('dashboard.stats');
+    
     // hero
     Route::post('/hero/create',[HeroController::class,'insert'])->name('hero.create');
+    Route::post('/hero/update',[HeroController::class,'update'])->name('hero.update');
     
     //estate 
     Route::post('/estate/create',[EstateController::class,'insert'])->name('estate.create');

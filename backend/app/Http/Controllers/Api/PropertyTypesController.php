@@ -17,7 +17,8 @@ class PropertyTypesController extends Controller
             'image'=>['required','file','mimetypes:image/jpeg,image/png,image/webp','max:2048'],
             'area'=>['required','integer'],
             'area_unit'=>['required','string'],
-            'display_order'=>['required','integer','min:1']
+            'display_order'=>['required','integer','min:1'],
+            'is_penthouse'=>['nullable','boolean']
         ]);
 
         if($request->hasFile('image')){

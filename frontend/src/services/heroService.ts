@@ -9,3 +9,12 @@ export const getHero=async()=>{
         return null;
     }
 }
+
+export const updateHero=async(formData: FormData)=>{
+    const response=await axiosInstance.post('/hero/update', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+    return response.data;
+}

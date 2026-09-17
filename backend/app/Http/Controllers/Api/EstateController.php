@@ -44,7 +44,7 @@ class EstateController extends Controller
 
         $levelOfArchitecture=Company::first('number_of_floors');
         $totalResidences=Property::count();
-        $propertyType=PropertyType::where('display_order',1)->first();
+        $propertyType=PropertyType::where('is_penthouse',true)->first();
         $propertyTypeArea=$propertyType->area.' '.$propertyType->area_unit;
 
         return response()->json([

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import Landing from "./pages/Landing"
 import { useEffect } from "react"
 import Aos from "aos"
@@ -7,6 +7,7 @@ import Login from "./pages/Login"
 import { Toaster } from "./components/ui/toast"
 import { useAuth } from "./hooks/useAuth"
 import { Loader2 } from "lucide-react"
+import AdminDashboard from "./pages/AdminDashboard"
 
 function App() {
 
@@ -32,7 +33,20 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Landing/>}/>
-        <Route path="/login" element={<Login/>}></Route>
+
+        <Route
+          path="/login" 
+          element={
+            authUser?<Navigate to={"/dashboard"}/>:<Login/>
+          }
+        />
+
+        <Route
+          path="/dashboard/*"
+          element={
+            authUser?<AdminDashboard/>:<Navigate to={"/"}/>
+          }
+        />
       </Routes>
       
       <Toaster/>

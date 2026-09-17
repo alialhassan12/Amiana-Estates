@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Storage;
     'image',
     'area',
     'area_unit',
-    'display_order'
+    'display_order',
+    'is_penthouse'
 ])]
 class PropertyType extends Model
 {

@@ -32,6 +32,29 @@ class AuthController extends Controller
         ]);
     }
 
+    public function register(Request $request){
+        $validated=$request->validate([
+            'name'=>['required','string'],
+            'email'=>['required','email'],
+            'password'=>['required','string','min:8']
+        ]);
+
+        $existUser=User::where('email',$validated['email'])->first();
+        if($existUser){
+            return response()->json([
+                'message'=>'User already exists'
+            ],400);
+        }
+
+        $user=User::create($validated);
+        // $token=$user->createToken('authToken')->plainTextToken;
+
+        return response()->json([
+            'message'=>'User registered successfully',
+            'user'=>$user
+        ]);
+    }
+
     public function logout(Request $request){
         $user=$request->user();
 
