@@ -11,10 +11,10 @@ export const getHero=async()=>{
 }
 
 export const updateHero=async(formData: FormData)=>{
-    const response=await axiosInstance.post('/hero/update', formData, {
+    const response=await axiosInstance.put('/hero/update', formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
     });
     return response.data;
-}
+}

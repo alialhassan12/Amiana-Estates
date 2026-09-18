@@ -33,9 +33,6 @@ const HomePreview = ({
             media.startsWith("data:video")
         ));
 
-    // True device simulation styles:
-    // When embedded in a desktop browser, CSS media queries (@media) evaluate the entire computer screen (1920px),
-    // not the 375px or 768px wrapper div. We map deviceMode to appropriate styles.
     const isMobile = deviceMode === "mobile";
     const isTablet = deviceMode === "tablet";
 
@@ -95,11 +92,11 @@ const HomePreview = ({
             {/* Content */}
             <div className="relative z-20 max-w-7xl">
                 {/* Main heading */}
-                <h1 className={`title font-normal ${titleSizeStyles} text-white break-words`}>
+                <h1 className={`title font-normal ${titleSizeStyles} text-white break-words inline-block`}>
                     {words.map((word, index) => {
                         if (index === words.length - 1) {
                             return (
-                                <span key={index} className="italic text-primary ml-1.5 sm:ml-2 inline-block">
+                                <span key={index} className="italic text-primary ml-1.5 sm:ml-2">
                                     {word}
                                 </span>
                             );

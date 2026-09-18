@@ -9,6 +9,7 @@ use App\Models\Property;
 use App\Models\PropertyType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EstateController extends Controller
 {
@@ -55,6 +56,40 @@ class EstateController extends Controller
                     'totalResidences'=>$totalResidences,
                     'propertyTypeArea'=>$propertyTypeArea
                 ]
+        ],200);
+    }
+
+    public function updateEstate(Request $request){
+        $validated=$request->validate([
+            'id'=>['required'],
+            'title'=>['required','string'],
+            'subTitle'=>['required','string'],
+            'description'=>['required','string'],
+            'media'=>['nullable','file','mimetypes:image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm','max:5120'],
+        ]);
+
+        $estate=Estate::where('id',$validated['id'])->firstOrFail();
+
+        if( $request->hasFile('media') ){
+            if(isset($estate->media)){
+                Storage::disk('public')->delete($estate->media);
+            }
+            
+            $media = $request->file('media')->store('estates','public');
+            if( $media === false ){
+                return response()->json([
+                    'message' => 'Failed to store media.'
+                ], 500);
+            }
+
+            $validated['media'] = $media;
+        }
+
+        $estate->update($validated);
+
+        return response()->json([
+            'message'=>'Estate updated successfully',
+            'estate'=>$estate
         ],200);
     }
 }

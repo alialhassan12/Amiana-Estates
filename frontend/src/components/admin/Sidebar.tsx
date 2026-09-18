@@ -6,6 +6,7 @@ import {
     House, 
     Houses, 
     LayoutDashboard, 
+    List, 
     Loader2, 
     LogOut, 
     Shapes, 
@@ -97,7 +98,13 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
                     href: "/properties",
                     path: "/dashboard/properties",
                     icon: Houses
-                }
+                },
+                {
+                    title:"Property Features",
+                    href:"/property-features",
+                    path:"/dashboard/property-features",
+                    icon:List
+                },
             ]
         }
     ];

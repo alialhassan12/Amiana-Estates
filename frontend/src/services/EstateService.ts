@@ -9,3 +9,17 @@ export const getEstate=async()=>{
         throw error;
     }
 }
+
+export const updateEstate=async(formData:FormData)=>{
+    try {
+        const response=await axiosInstance.put('/estate/update',formData,{
+            headers:{
+                'Content-Type':'multipart/form-data'
+            }
+        });
+        return response.data;
+    } catch (error:any) {
+        console.log(error?.response?.data);
+        throw error;
+    }
+}

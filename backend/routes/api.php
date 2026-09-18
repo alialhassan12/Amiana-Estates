@@ -11,7 +11,6 @@ use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\PropertyFeaturesController;
 use App\Http\Controllers\Api\PropertyTypesController;
 use App\Http\Controllers\Api\ResidencesController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // public routes
@@ -38,10 +37,11 @@ Route::middleware('auth:sanctum')->group(function(){
     
     // hero
     Route::post('/hero/create',[HeroController::class,'insert'])->name('hero.create');
-    Route::post('/hero/update',[HeroController::class,'update'])->name('hero.update');
+    Route::put('/hero/update',[HeroController::class,'update'])->name('hero.update');
     
     //estate 
     Route::post('/estate/create',[EstateController::class,'insert'])->name('estate.create');
+    Route::put('/estate/update',[EstateController::class,'updateEstate'])->name('estate.update');
     
     // property types
     Route::post('/property/types/create',[PropertyTypesController::class,'insert'])->name('property.types.create');
@@ -54,6 +54,7 @@ Route::middleware('auth:sanctum')->group(function(){
     
     // residences
     Route::post('/residences/create',[ResidencesController::class,'insert'])->name('residence.create');
+    Route::put('/residences/update',[ResidencesController::class,'updateResidences'])->name('residences.update');
 
     // penthouse
     Route::post('/penthouse/create',[PenthousesController::class,'insert'])->name('penthouse.create');

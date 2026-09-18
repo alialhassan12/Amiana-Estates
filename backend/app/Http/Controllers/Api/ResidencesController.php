@@ -37,8 +37,8 @@ class ResidencesController extends Controller
             );
         });
 
-        $featuredProperty=$propertyTypes->first();
-        $propertyTypes=$propertyTypes->skip(1)->values();
+        $featuredProperty=$propertyTypes->where('is_penthouse',true)->first();
+        $propertyTypes=$propertyTypes->where('is_penthouse',false)->values();
 
         return response()->json([
             'message'=>'Residences data fetched successfully',
@@ -47,6 +47,23 @@ class ResidencesController extends Controller
                 'propertyTypes'=>$propertyTypes,
                 'featuredProperty'=>$featuredProperty,
             ]
+        ],200);
+    }
+
+    public function updateResidences(Request $request){
+        $validated=$request->validate([
+            'id'=>['required'],
+            'title'=>['required','string','max:100'],
+            'subTitle'=>['required','string','max:100'],
+        ]);
+
+        $residence=Residence::where('id',$validated['id'])->firstOrFail();
+        
+        $residence->update($validated);
+
+        return response()->json([
+            'message'=>'Residences data updated successfully',
+            'residence'=>$residence,
         ],200);
     }
 }

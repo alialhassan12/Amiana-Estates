@@ -17,44 +17,44 @@ const Residences = () => {
     }
 
     return (
-        <div ref={ref} className="flex flex-col gap-5 py-10 mt-20">
+        <div ref={ref} className="flex flex-col gap-6 sm:gap-8 lg:gap-10 py-8 sm:py-10 mt-10 sm:mt-16 lg:mt-20">
             {/* heading */}
-            <div className="flex flex-col gap-2 ">
-                <p data-aos="fade-up" className="text-primary tracking-wider uppercase text-sm font-normal">
+            <div className="flex flex-col gap-2 sm:gap-3">
+                <p data-aos="fade-up" className="text-primary tracking-wider uppercase text-xs sm:text-sm font-normal">
                     {residence?.title}
                 </p>
-                <h1 data-aos="fade-up" data-aos-delay="200" className="title uppercase text-5xl w-1/2 leading-tight">
+                <h1 data-aos="fade-up" data-aos-delay="200" className="title uppercase text-3xl sm:text-4xl lg:text-5xl w-full lg:w-2/3 xl:w-1/2 leading-tight tracking-tight">
                     {residence?.subTitle}
                 </h1>
             </div>
 
             {/* featured property */}
-            <div className="w-full flex flex-row items-center gap-10 pb-10 pr-20 bg-[#F4F3F0] group">
-                <div className="max-w-[60%] w-full h-full overflow-hidden">
-                    <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" src={featuredProperty?.image_url} alt="" />
+            <div className="w-full flex flex-col lg:flex-row items-center gap-6 sm:gap-8 lg:gap-10 pb-6 sm:pb-8 lg:pb-10 pr-0 lg:pr-16 xl:pr-20 bg-[#F4F3F0] group overflow-hidden">
+                <div className="w-full lg:max-w-[60%] h-[320px] sm:h-[420px] lg:h-[500px] xl:h-[550px] overflow-hidden">
+                    <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" src={featuredProperty?.image_url} alt={featuredProperty?.title || "Featured Residence"} />
                 </div>
-                <div data-aos="fade-up" data-aos-delay="500" className="flex flex-1 flex-col items-start gap-4">
+                <div data-aos="fade-up" data-aos-delay="500" className="flex flex-1 flex-col items-start gap-3 sm:gap-4 w-full p-5 sm:p-8 lg:p-0">
                     <p className="body-text tracking-widest text-primary uppercase text-xs">
                         Residence {featuredProperty?.display_order}
                     </p>
-                    <h1 className="title text-3xl">
+                    <h1 className="title text-2xl sm:text-3xl lg:text-4xl">
                         {featuredProperty?.title}
                     </h1>
-                    <h2 className="title text-2xl text-[#4A465D]">
+                    <h2 className="title text-xl sm:text-2xl text-[#4A465D]">
                         Approx. {featuredProperty?.area}{featuredProperty?.area_unit}
                     </h2>
-                    <p className="body-text text-[#504C51] text-sm leading-relaxed">
+                    <p className="body-text text-[#504C51] text-xs sm:text-sm leading-relaxed">
                         {featuredProperty?.description}
                     </p>
                     {/* features */}
-                    <div className="flex flex-col mt-4 gap-3 w-full">
+                    <div className="flex flex-col mt-2 sm:mt-4 gap-2.5 sm:gap-3 w-full">
                         {featuredProperty?.features?.map((feature: any) => {
                             return (
                                 <div key={feature.id} className="flex flex-row items-center justify-between">
                                     <p className="body-text text-[#504C51] font-semibold text-xs">
                                         {feature?.title}
                                     </p>
-                                    <p className="body-text text-xs ">
+                                    <p className="body-text text-xs">
                                         {feature?.value}
                                     </p>
                                 </div>
@@ -63,15 +63,15 @@ const Residences = () => {
                     </div>
 
                     {/* discover button */}
-                    <button className="flex flex-row items-center gap-2 tracking-widest text-sm uppercase mt-8 px-3 py-4 bg-black text-white hover:bg-primary transition-all duration-300 cursor-pointer group/discover-btn">
+                    <button className="flex flex-row items-center justify-center sm:justify-start gap-2 tracking-widest text-xs sm:text-sm uppercase mt-4 sm:mt-6 lg:mt-8 px-5 py-3.5 sm:px-6 sm:py-4 bg-black text-white hover:bg-primary transition-all duration-300 cursor-pointer group/discover-btn w-full sm:w-auto">
                         Discover {featuredProperty?.title} 
-                        <ArrowRight size={24} className="group-hover/discover-btn:translate-x-1 transition-transform duration-300" />
+                        <ArrowRight size={20} className="group-hover/discover-btn:translate-x-1 transition-transform duration-300" />
                     </button>
                 </div>
             </div>
 
-            {/* Property tyes */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 ">
+            {/* Property types */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
                 {propertyTypes?.map((type: any) => {
                     return (
                         <PropertyTypeCard key={type.id} propertyType={type} />
