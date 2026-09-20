@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\DesignPhilosophyController;
+use App\Http\Controllers\Api\DesignPhilosophyPrincipleController;
 use App\Http\Controllers\Api\EstateController;
 use App\Http\Controllers\Api\EstateExperienceController;
 use App\Http\Controllers\Api\ExperienceSpecificationController;
 use App\Http\Controllers\Api\HeroController;
+use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\PenthousesController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\PropertyFeaturesController;
@@ -26,6 +29,11 @@ Route::get('/residences',[ResidencesController::class,'getResidences'])->name('r
 Route::get('/penthouse',[PenthousesController::class,'getPenthouse'])->name('penthouse.get');
 // Estate Experience
 Route::get('/estate-experience',[EstateExperienceController::class,'getEstateExperience'])->name('estate.experience.get');
+// design philosophy
+Route::get('/design-philosophy',[DesignPhilosophyController::class,'getDesignPhilosophy'])->name('design.philosophy.get');
+// location
+Route::get('/location',[LocationController::class,'getLocation'])->name('location.get');
+
 
 // protected routes
 Route::middleware('auth:sanctum')->group(function(){
@@ -66,4 +74,13 @@ Route::middleware('auth:sanctum')->group(function(){
     
     // Estate Experience Specifications
     Route::post('/estate-experience-specification/create',[ExperienceSpecificationController::class,'insert'])->name('estate.experience.specification.create');
+
+    // design philosophy
+    Route::post('/design-philosophy/create',[DesignPhilosophyController::class,'insert'])->name('design.philosophy.create');
+
+    // design philosophy principles
+    Route::post('/design-philosophy-principles/create',[DesignPhilosophyPrincipleController::class,'insert'])->name('design.philosophy.principles.create');
+
+    // location
 });
+Route::post('/location/update',[LocationController::class,'updateOrInsertLocation'])->name('location.update-or-insert');

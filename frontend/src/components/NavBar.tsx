@@ -22,7 +22,7 @@ const NavBar = () => {
         { label: 'residences', path: 'residences' },
         { label: 'penthouse', path: 'penthouse' },
         { label: 'estate experience', path: 'estate-experience' },
-        { label: 'wellness', path: 'wellness' },
+        { label: 'Amiana Philosophy', path: 'design-philosophy' },
         { label: 'gallery', path: 'gallery' },
         { label: 'location', path: 'location' },
         { label: 'enquiry', path: 'enquiry' }
