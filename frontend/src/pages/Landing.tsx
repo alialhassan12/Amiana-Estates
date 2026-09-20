@@ -4,6 +4,8 @@ import Estate from "../components/Estate";
 import Residences from "../components/Residences";
 import Penthouse from "../components/Penthouse";
 import EstateExperience from "../components/EstateExperience";
+import DesignPhilosophy from "../components/DesignPhilosophy";
+import Location from "../components/Location";
 
 const Landing = () => {
     return (
@@ -27,6 +29,12 @@ const Landing = () => {
                 <div className="px-10">
                     <div id="estate-experience">
                         <EstateExperience/>
+                    </div>
+                    <div id="design-philosophy">
+                        <DesignPhilosophy/>
+                    </div>
+                    <div id="location">
+                        <Location/>
                     </div>
                 </div>
             </div>

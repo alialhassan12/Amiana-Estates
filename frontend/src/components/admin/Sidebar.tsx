@@ -1,4 +1,5 @@
 import { 
+    ArchiveRestoreIcon,
     Building, 
     BuildingComplex, 
     Compass, 
@@ -81,7 +82,13 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
                     href: "/experience",
                     path: "/dashboard/experience",
                     icon: Compass
-                }
+                },
+                {
+                    title: "Philosophy",
+                    href: "/design-philosophy",
+                    path: "/dashboard/design-philosophy",
+                    icon: ArchiveRestoreIcon
+                },
             ]
         },
         {
@@ -170,7 +177,7 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
                     </div>
 
                     {/* Navigation Groups*/}
-                    <div className="flex-1 overflow-y-auto px-3 py-2 space-y-6">
+                    <div className="flex-1 overflow-y-auto px-3 py-2 space-y-6 custom-scrollbar">
                         {sidebarGroups.map((group, index) => {
                             return (
                                 <div className="flex flex-col mt-4" key={index}>
@@ -210,6 +217,9 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
                                 </div>
                             );
                         })}
+                    </div>
+
+                    <div className="px-3 py-4 border-t border">
                         {/* Logout */}
                         <div onClick={handleLogout} className="flex flex-row items-center gap-2.5 px-3 py-2 group cursor-pointer hover:bg-[#E9E8E5] transition-all duration-200 rounded-sm">
                             {isLoggingOut? <Loader2 className="h-4 w-4 shrink-0 transition-colors text-neutral-700 hover:text-neutral-900"/>:<LogOut className="h-4 w-4 shrink-0 transition-colors text-neutral-700 hover:text-neutral-900"/>}
