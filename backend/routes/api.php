@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\PropertyFeaturesController;
 use App\Http\Controllers\Api\PropertyTypesController;
 use App\Http\Controllers\Api\ResidencesController;
+use App\Http\Controllers\Api\SocialController;
 use Illuminate\Support\Facades\Route;
 
 // public routes
@@ -33,6 +34,8 @@ Route::get('/estate-experience',[EstateExperienceController::class,'getEstateExp
 Route::get('/design-philosophy',[DesignPhilosophyController::class,'getDesignPhilosophy'])->name('design.philosophy.get');
 // location
 Route::get('/location',[LocationController::class,'getLocation'])->name('location.get');
+// socials
+Route::get('/socials',[SocialController::class,'getSocials'])->name('socials.get');
 
 
 // protected routes
@@ -82,5 +85,5 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/design-philosophy-principles/create',[DesignPhilosophyPrincipleController::class,'insert'])->name('design.philosophy.principles.create');
 
     // location
+    Route::post('/location/update',[LocationController::class,'updateOrInsertLocation'])->name('location.update-or-insert');
 });
-Route::post('/location/update',[LocationController::class,'updateOrInsertLocation'])->name('location.update-or-insert');

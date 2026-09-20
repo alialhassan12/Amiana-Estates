@@ -6,6 +6,7 @@ import Penthouse from "../components/Penthouse";
 import EstateExperience from "../components/EstateExperience";
 import DesignPhilosophy from "../components/DesignPhilosophy";
 import Location from "../components/Location";
+import Footer from "../components/Footer";
 
 const Landing = () => {
     return (
@@ -38,6 +39,7 @@ const Landing = () => {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     )
 }
