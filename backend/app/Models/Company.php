@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Storage;
     'hero_media',
     'hero_media_type',
     'number_of_floors',
+    'contact_email',
+    'contact_phone',
 ])]
 
 class Company extends Model

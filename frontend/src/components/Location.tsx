@@ -308,37 +308,6 @@ const Location = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Neighborhood & Surrounding Highlights Grid */}
-            {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
-                {SURROUNDINGS.map((item, index) => (
-                    <div 
-                        data-aos="fade-up" 
-                        data-aos-delay={index * 120}
-                        key={item.number}
-                        className="group/card relative flex flex-col justify-between p-6 bg-[#F4F3F0]/60 dark:bg-neutral-900/40 border border-neutral-200/70 dark:border-neutral-800/70 hover:border-primary/50 dark:hover:border-primary/50 hover:bg-[#F4F3F0] dark:hover:bg-neutral-900 transition-all duration-300 min-h-[170px]"
-                    >
-                        <div>
-                            <div className="flex items-center justify-between gap-3 mb-4">
-                                <span className="title text-2xl sm:text-3xl text-primary/80 group-hover/card:text-primary transition-colors duration-300 font-normal">
-                                    {item.number}
-                                </span>
-                                <span className="body-text text-[10px] uppercase tracking-wider text-primary font-medium border border-primary/30 px-2 py-0.5 bg-primary/10">
-                                    {item.distance}
-                                </span>
-                            </div>
-
-                            <h3 className="title uppercase text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-normal tracking-wide group-hover/card:text-primary transition-colors duration-300">
-                                {item.title}
-                            </h3>
-                        </div>
-
-                        <p className="body-text text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 font-light leading-relaxed mt-3">
-                            {item.description}
-                        </p>
-                    </div>
-                ))}
-            </div> */}
         </div>
     );
 };
