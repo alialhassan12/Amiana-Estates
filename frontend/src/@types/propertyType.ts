@@ -8,6 +8,7 @@ export interface PropertyType{
     area:number,
     area_unit:string,
     display_order:number,
+    is_penthouse:boolean | number,
     features?:{
         id:number,
         title:string,
