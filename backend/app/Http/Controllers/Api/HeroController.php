@@ -19,7 +19,7 @@ class HeroController extends Controller
             'hero_cta1_url'=>['required','string'],
             'hero_cta2_text'=>['required','string'],
             'hero_cta2_url'=>['required','string'],
-            'hero_media'=>['required','file','mimetypes:image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm','max:5120'],
+            'hero_media'=>['required','file','mimetypes:image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm','max:80000'],
             'hero_media_type'=>['required','string'],
             'number_of_floors'=>['required','integer','min:1'],
         ]);
@@ -68,7 +68,7 @@ class HeroController extends Controller
             'hero_cta1_url'=>['required','string'],
             'hero_cta2_text'=>['required','string'],
             'hero_cta2_url'=>['required','string'],
-            'hero_media'=>['nullable','file','mimetypes:image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm','max:5120'],
+            'hero_media'=>['nullable','file','mimetypes:image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm','max:80000'],
             'hero_media_type'=>['required','string'],
         ]);
 
