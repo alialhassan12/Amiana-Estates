@@ -14,18 +14,22 @@ import {
     XIcon, 
     ChevronRight 
 } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 const NavBar = () => {
+    const location=useLocation();
+    const [activeSection,setActiveSection]=useState<string>("home");
+
     const navLinks = [
-        { label: 'home', path: 'home' },
-        { label: 'the estate', path: 'the-estate' },
-        { label: 'residences', path: 'residences' },
-        { label: 'penthouse', path: 'penthouse' },
-        { label: 'estate experience', path: 'estate-experience' },
-        { label: 'Amiana Philosophy', path: 'design-philosophy' },
-        { label: 'gallery', path: 'gallery' },
-        { label: 'location', path: 'location' },
-        { label: 'enquiry', path: 'enquiry' }
+        { label: 'home', path: 'home', id:"home" },
+        { label: 'the estate', path: 'the-estate', id:"the-estate" },
+        { label: 'residences', path: 'residences', id:"residences" },
+        { label: 'penthouse', path: 'penthouse', id:"penthouse" },
+        { label: 'estate experience', path: 'estate-experience', id:"estate-experience" },
+        { label: 'Amiana Philosophy', path: 'design-philosophy', id:"design-philosophy" },
+        { label: 'gallery', path: 'gallery', id:"gallery" },
+        { label: 'location', path: 'location', id:"location" },
+        { label: 'enquiry', path: 'enquiry', id:"enquiry" }
     ];
 
     const { data: heroData } = useGetHero();
@@ -36,26 +40,58 @@ const NavBar = () => {
     const [isMobileOpen, setIsMobileOpen] = useState<boolean>(false);
     const lastScrollY = useRef(0);
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     const handleScroll = () => {
+    //         const currentScrollY = window.scrollY;
+    //         // keep visible when near the top of the page 
+    //         if (currentScrollY < 50) {
+    //             setIsVisible(true);
+    //         }
+    //         // hide navbar when scrolling down
+    //         else if (currentScrollY > lastScrollY.current && currentScrollY - lastScrollY.current > 5) {
+    //             setIsVisible(false);
+    //         }
+    //         // reveal navbar when scrolling up
+    //         else if (currentScrollY < lastScrollY.current && lastScrollY.current - currentScrollY > 5) {
+    //             setIsVisible(true);
+    //         }
+    //         lastScrollY.current = currentScrollY;
+    //     };
+    //     window.addEventListener("scroll", handleScroll, { passive: true });
+    //     return () => window.removeEventListener("scroll", handleScroll);
+    // }, []);
+
+    useEffect(()=>{
+        // Sync with hash if available on initial load
+        if (location.hash) {
+            setActiveSection(location.hash.replace("#", ""));
+        }
         const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-            // keep visible when near the top of the page 
-            if (currentScrollY < 50) {
-                setIsVisible(true);
+            const scrollPosition = window.scrollY + 160; // Offset for sticky navbar & buffer
+
+            for (let i = navLinks.length - 1; i >= 0; i--) {
+                const sectionId = navLinks[i].id;
+                const sectionEl = document.getElementById(sectionId);
+
+                if (sectionEl) {
+                    const top = sectionEl.offsetTop;
+                    if (scrollPosition >= top) {
+                        setActiveSection(sectionId);
+                        return;
+                    }
+                }
             }
-            // hide navbar when scrolling down
-            else if (currentScrollY > lastScrollY.current && currentScrollY - lastScrollY.current > 5) {
-                setIsVisible(false);
+
+            // Default to first section when at top of page
+            if (window.scrollY < 100) {
+                setActiveSection("Home");
             }
-            // reveal navbar when scrolling up
-            else if (currentScrollY < lastScrollY.current && lastScrollY.current - currentScrollY > 5) {
-                setIsVisible(true);
-            }
-            lastScrollY.current = currentScrollY;
         };
-        window.addEventListener("scroll", handleScroll, { passive: true });
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+        
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    },[location.hash]);
 
     return (
         <nav 
@@ -82,7 +118,7 @@ const NavBar = () => {
                         <li key={index}>
                             <a 
                                 href={`/#${link.path}`} 
-                                className="uppercase body-text text-xs tracking-widest text-neutral-800 hover:text-primary hover:font-semibold transition-all duration-200"
+                                className={`uppercase body-text text-xs tracking-widest text-neutral-800 hover:text-primary hover:font-semibold transition-all duration-200 ${activeSection===link.id?'text-primary font-semibold':''}`}
                             >
                                 {link.label}
                             </a>

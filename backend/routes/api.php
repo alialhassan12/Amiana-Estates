@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\EstateExperienceController;
 use App\Http\Controllers\Api\ExperienceSpecificationController;
 use App\Http\Controllers\Api\HeroController;
 use App\Http\Controllers\Api\LocationController;
+use App\Http\Controllers\Api\PenthouseMediaController;
 use App\Http\Controllers\Api\PenthousesController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\PropertyFeaturesController;
@@ -72,8 +73,10 @@ Route::middleware('auth:sanctum')->group(function(){
 
     // penthouse
     Route::post('/penthouse/create',[PenthousesController::class,'insert'])->name('penthouse.create');
+    Route::put('/penthouse/edit',[PenthousesController::class,'updatePenthouse'])->name('penthouse.edit');
     // penthouse media
-    Route::post('/penthouse/media/insert',[PenthousesController::class,'insertPenthouseMedia'])->name('penthouse.media.insert');
+    Route::post('/penthouse/media/insert',[PenthouseMediaController::class,'insertPenthouseMedia'])->name('penthouse.media.insert');
+    Route::post('/penthouse/media/delete/{id}',[PenthouseMediaController::class,'deletePenthouseMedia'])->name('penthouse.media.delete');
     
     // estate experience
     Route::post('/estate-experience/create',[EstateExperienceController::class,'insert'])->name('estate.experience.create');

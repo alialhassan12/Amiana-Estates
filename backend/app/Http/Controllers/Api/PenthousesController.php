@@ -7,6 +7,8 @@ use App\Models\Penthouse;
 use App\Models\PenthouseMedia;
 use App\Models\PropertyType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class PenthousesController extends Controller
 {
@@ -52,8 +54,8 @@ class PenthousesController extends Controller
     public function getPenthouse(){
         $penthouse=Penthouse::with(['penthouseMedia'])->first();
 
-        // features from penthouse type compare the title
-        $penthouse_property_type=PropertyType::where('title','like','%penthouse%')
+        // features from penthouse
+        $penthouse_property_type=PropertyType::where('is_penthouse',true)
                 ->with('features')
                 ->first();
 
@@ -64,6 +66,22 @@ class PenthousesController extends Controller
             'message'=>'Penthouse fetched successfully',
             'penthouse'=>$penthouse,
             'features'=>$features,
+        ]);
+    }
+
+    public function updatePenthouse(Request $request){
+        $validated=$request->validate([
+            'title'=>['required','string'],
+            'subTitle'=>['required','string'],
+            'description'=>['required','string'],
+        ]);
+
+        $penthouse=Penthouse::firstOrFail();
+        $penthouse->update($validated);
+
+        return response()->json([
+            'message'=>'Penthouse updated successfully',
+            'penthouse'=>$penthouse
         ]);
     }
 }

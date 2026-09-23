@@ -34,9 +34,9 @@ const Gallery: React.FC<GalleryProps> = ({ media = [], className = "" }) => {
     // Helper to get plate data with fallback
     const getPlateData = useCallback((item: MediaItem, index: number) => {
         return {
-            url: item.media_url || item.media_path || "",
-            title: item.title || "",
-            description: item.description,
+            url: item?.media_url || item?.media_path || "",
+            title: item?.title || "",
+            description: item?.description,
             plateNum: padZero(index + 1),
             totalNum: padZero(totalPlates),
         };
