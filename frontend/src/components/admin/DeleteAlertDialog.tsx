@@ -1,17 +1,29 @@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogTitle } from "../ui/alert-dialog";
 
-type DeleteAlertDialogProps={
-    open:boolean,
-    setOpen:(open:boolean)=>void,
-    title:string,
-    description:string,
-    onConfirm:()=>void,
-    onCancel:()=>void,
-}
+type DeleteAlertDialogProps = {
+    open: boolean;
+    setOpen?: (open: boolean) => void;
+    onOpenChange?: (open: boolean) => void;
+    title: string;
+    description: string;
+    onConfirm: () => void | Promise<void>;
+    onCancel: () => void;
+    isLoading?: boolean;
+};
 
-const DeleteAlertDialog=({open,setOpen,title,description,onConfirm,onCancel}:DeleteAlertDialogProps)=>{
+const DeleteAlertDialog = ({
+    open,
+    setOpen,
+    onOpenChange,
+    title,
+    description,
+    onConfirm,
+    onCancel,
+    isLoading = false,
+}: DeleteAlertDialogProps) => {
+    const handleOpenChange = onOpenChange ?? setOpen;
     return (
-        <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialog open={open} onOpenChange={handleOpenChange}>
             <AlertDialogContent>
                 <AlertDialogTitle>
                     {title}
@@ -24,6 +36,7 @@ const DeleteAlertDialog=({open,setOpen,title,description,onConfirm,onCancel}:Del
                         size="sm"
                         variant="outline"
                         onClick={onCancel}
+                        disabled={isLoading}
                         >
                         Cancel
                     </AlertDialogCancel>
@@ -31,13 +44,14 @@ const DeleteAlertDialog=({open,setOpen,title,description,onConfirm,onCancel}:Del
                         size="sm"
                         variant="destructive"
                         onClick={onConfirm}
+                        disabled={isLoading}
                         >
-                        Confirm
+                        {isLoading ? "Deleting..." : "Confirm"}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
     );
-}
+};
 
 export default DeleteAlertDialog;

@@ -8,6 +8,7 @@ import Home from "./adminDashboardPages/Home";
 import Estate from "./adminDashboardPages/Estate";
 import Residence from "./adminDashboardPages/Residence";
 import PropertyTypes from "./adminDashboardPages/PropertyTypes";
+import Penthouse from "./adminDashboardPages/Penthouse";
 
 const AdminDashboard = () => {
     const [openSidebar, setOpenSidebar] = useState<boolean>(true);
@@ -51,6 +52,7 @@ const AdminDashboard = () => {
                         <Route path="/estate" element={<Estate/>}/>
                         <Route path="/residences" element={<Residence/>}/>
                         <Route path="/property-types" element={<PropertyTypes/>}/>
+                        <Route path="/penthouse" element={<Penthouse/>}/>
                     </Routes>
                 </main>
             </div>
