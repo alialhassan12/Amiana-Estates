@@ -1,14 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { getHero, updateHero } from "../services/heroService"
 
-export const heroKeys={
-    all:['hero']
+export const heroKeys = {
+    all: ['hero']
 }
 
-export const useGetHero=()=>{
+export const useGetHero = (enabled: boolean = true) => {
     return useQuery({
-        queryKey:heroKeys.all,
-        queryFn:()=> getHero(),
+        queryKey: heroKeys.all,
+        queryFn: () => getHero(),
+        enabled
     })
 }
 
@@ -20,4 +21,4 @@ export const useUpdateHero=()=>{
             queryClient.invalidateQueries({ queryKey: heroKeys.all });
         }
     });
-}
+}

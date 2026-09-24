@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { addPropertyType, deletePropertyType, editPropertyType, getPropertyTypes } from "../services/propertyTypesService"
+import { addPropertyType, deletePropertyType, editPropertyType, getPropertyTypes, getPropertyTypesForFeatures } from "../services/propertyTypesService"
 import { residenceKeys } from "./useResidence"
 
 export const propertyTypeKeys={
@@ -11,6 +11,13 @@ export const useGetPropertyTypes=(page:number=1,search?:string)=>{
     return useQuery({
         queryKey:propertyTypeKeys.list(page,search),
         queryFn:()=>getPropertyTypes(page,search),
+    })
+}
+
+export const useGetPropertyTypesForFeatures=()=>{
+    return useQuery({
+        queryKey:propertyTypeKeys.all,
+        queryFn:()=>getPropertyTypesForFeatures(),
     })
 }
 

@@ -45,8 +45,16 @@ class PropertyTypesController extends Controller
         $searchQuery=$request->query('search');
         $propertyTypes=PropertyType::when($searchQuery, function($query) use ($searchQuery){
             $query->where('title','like','%'.$searchQuery.'%');
-        })->orderBy('is_penthouse','desc')->paginate(10);
+        })->orderBy('is_penthouse','desc')->paginate(5);
 
+        return response()->json([
+            'message'=>'Property types fetched successfully',
+            'propertyTypes'=>$propertyTypes,
+        ],200);
+    }
+
+    public function getPropertyTypesForFeatures(){
+        $propertyTypes=PropertyType::select('id','title')->get();
         return response()->json([
             'message'=>'Property types fetched successfully',
             'propertyTypes'=>$propertyTypes,
