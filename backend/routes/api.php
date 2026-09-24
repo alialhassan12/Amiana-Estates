@@ -92,4 +92,11 @@ Route::middleware('auth:sanctum')->group(function(){
 
     // location
     Route::post('/location/update',[LocationController::class,'updateOrInsertLocation'])->name('location.update-or-insert');
+
+    //property features
+    Route::get('/property/types/features',[PropertyTypesController::class,'getPropertyTypesForFeatures'])->name('property.types.features.get');
+    Route::post('/property/features/create',[PropertyFeaturesController::class,'insert'])->name('property.features.create');
+    Route::get('/property/features',[PropertyFeaturesController::class,'getPropertyFeatures'])->name('property.features.get');
+    Route::delete('/property/feature/delete/{id}',[PropertyFeaturesController::class,'deletePropertyFeature'])->name('property.feature.delete');
+    Route::put('/property/feature/edit',[PropertyFeaturesController::class,'editPropertyFeature'])->name('property.feature.edit');
 });

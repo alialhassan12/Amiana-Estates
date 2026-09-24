@@ -10,6 +10,16 @@ export const getPropertyTypes=async(page:number=1,search?:string)=>{
     }
 }
 
+export const getPropertyTypesForFeatures=async()=>{
+    try {
+        const response=await axiosInstance.get(`/property/types/features`);
+        return response.data;
+    } catch (error:any) {
+        console.log("error fetching property types for features:",error);
+        throw error;
+    }
+}
+
 export const addPropertyType=async(data:FormData)=>{
     try{
         const response = await axiosInstance.post('/property/types/create',data,{

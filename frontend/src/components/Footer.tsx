@@ -2,6 +2,7 @@ import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import { useGetHero } from "../hooks/useHero";
 import { useGetLocation } from "../hooks/useLocation";
 import { useGetSocials } from "../hooks/useSocials";
+import { useInView } from "../hooks/useInView";
 
 const exploreLinks = [
     { label: "Residences", href: "/#residences" },
@@ -15,15 +16,17 @@ const legalLinks = [
 ];
 
 const Footer = () => {
-    const { data: heroData } = useGetHero();
-    const { data: location } = useGetLocation();
-    const {data:socials}=useGetSocials();
+    const {isInView,ref}=useInView({rootMargin:"250px"})
+    
+    const { data: heroData } = useGetHero(isInView);
+    const { data: location } = useGetLocation(isInView);
+    const {data:socials}=useGetSocials(isInView);
 
     const companyName = heroData?.hero?.name || "AMIANA ESTATES";
     const address = location?.address || "Aberdeen, Sierra Leone";
 
     return (
-        <footer className="bg-[#161513] px-6 py-10 text-white sm:px-10 sm:py-12 md:px-16 lg:px-20">
+        <footer ref={ref} className="bg-[#161513] px-6 py-10 text-white sm:px-10 sm:py-12 md:px-16 lg:px-20">
             <div className="mx-auto max-w-7xl">
                 <div className="flex flex-col gap-8 border-b border-white/10 pb-8 sm:flex-row sm:items-end sm:justify-between sm:gap-12 sm:pb-10">
                     <div className="max-w-xl">
