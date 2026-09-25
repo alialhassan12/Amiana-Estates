@@ -9,3 +9,17 @@ export const getDesignPhilosophy = async()=>{
         throw error.response.data.message || error.message;
     }
 }
+
+export const updateDesignPhilosophy = async (data:FormData)=>{
+    try {
+        const response = await axiosInstance.put(`/design-philosophy/update`,data,{
+            headers:{
+                'Content-Type': 'multipart/form-data',
+            }
+        });
+        return response.data;
+    } catch (error: any) {
+        console.log("error in updating design philosophy", error);
+        throw error.response?.data?.message || error.message || error;
+    }
+}

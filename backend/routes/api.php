@@ -65,7 +65,11 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/property/create',[PropertyController::class,'insert'])->name('property.create');
 
     // property features
+    Route::get('/property/types/features',[PropertyTypesController::class,'getPropertyTypesForFeatures'])->name('property.types.features.get');
     Route::post('/property/features/create',[PropertyFeaturesController::class,'insert'])->name('property.features.create');
+    Route::get('/property/features',[PropertyFeaturesController::class,'getPropertyFeatures'])->name('property.features.get');
+    Route::delete('/property/feature/delete/{id}',[PropertyFeaturesController::class,'deletePropertyFeature'])->name('property.feature.delete');
+    Route::put('/property/feature/edit',[PropertyFeaturesController::class,'editPropertyFeature'])->name('property.feature.edit');
     
     // residences
     Route::post('/residences/create',[ResidencesController::class,'insert'])->name('residence.create');
@@ -87,17 +91,16 @@ Route::middleware('auth:sanctum')->group(function(){
 
     // design philosophy
     Route::post('/design-philosophy/create',[DesignPhilosophyController::class,'insert'])->name('design.philosophy.create');
+    Route::put('/design-philosophy/update',[DesignPhilosophyController::class,'updateDesignphilosophy'])->name('design.philosophy.update');
 
     // design philosophy principles
-    Route::post('/design-philosophy-principles/create',[DesignPhilosophyPrincipleController::class,'insert'])->name('design.philosophy.principles.create');
+    Route::post('/design-philosophy/principles/create',[DesignPhilosophyPrincipleController::class,'insert'])->name('design.philosophy.principles.create');
+    Route::put('/design-philosophy/principles/update',[DesignPhilosophyPrincipleController::class,'update'])->name('design.philosophy.principles.update');
+    Route::delete('/design-philosophy/principles/delete/{id}',[DesignPhilosophyPrincipleController::class,'delete'])->name('design.philosophy.principles.delete');
+    
 
     // location
     Route::post('/location/update',[LocationController::class,'updateOrInsertLocation'])->name('location.update-or-insert');
 
-    //property features
-    Route::get('/property/types/features',[PropertyTypesController::class,'getPropertyTypesForFeatures'])->name('property.types.features.get');
-    Route::post('/property/features/create',[PropertyFeaturesController::class,'insert'])->name('property.features.create');
-    Route::get('/property/features',[PropertyFeaturesController::class,'getPropertyFeatures'])->name('property.features.get');
-    Route::delete('/property/feature/delete/{id}',[PropertyFeaturesController::class,'deletePropertyFeature'])->name('property.feature.delete');
-    Route::put('/property/feature/edit',[PropertyFeaturesController::class,'editPropertyFeature'])->name('property.feature.edit');
+    
 });

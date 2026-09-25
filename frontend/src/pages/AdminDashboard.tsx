@@ -11,6 +11,7 @@ import PropertyTypes from "./adminDashboardPages/PropertyTypes";
 import Penthouse from "./adminDashboardPages/Penthouse";
 import PropertyFeatures from "./adminDashboardPages/PropertyFeatures";
 import Experience from "./adminDashboardPages/Experience";
+import DesignPhilosophy from "./adminDashboardPages/DesignPhilosophy";
 
 const AdminDashboard = () => {
     const [openSidebar, setOpenSidebar] = useState<boolean>(true);
@@ -57,6 +58,7 @@ const AdminDashboard = () => {
                         <Route path="/property-features" element={<PropertyFeatures/>}/>
                         <Route path="/penthouse" element={<Penthouse/>}/>
                         <Route path="/experience" element={<Experience/>}/>
+                        <Route path="/design-philosophy" element={<DesignPhilosophy/>}/>
                     </Routes>
                 </main>
             </div>
