@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\EstateExperience;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 
@@ -69,6 +70,67 @@ class EstateExperienceController extends Controller
         
         return response()->json([
             'message'=>'Estate Experience fetched successfully',
+            'estateExperience'=>$estateExperience
+        ]);
+    }
+
+    public function updateEstateExperience(Request $request){
+        $validated=$request->validate([
+            'id'=>['required','exists:estate_experiences,id'],
+            'title'=>['required','string'],
+            'subTitle'=>['required','string'],
+            'card_1_image'=>['sometimes','image','max:2048'],
+            'card_1_image_heading'=>['required','string'],
+            'card_1_title'=>['required','string'],
+            'card_1_quote'=>['required','string'],
+            'card_1_description'=>['required','string'],
+
+            'specifications_title'=>['required','string'],
+            'specifications_subTitle'=>['required','string'],
+            'specifications_description'=>['required','string'],
+            
+            'card_2_title'=>['required','string'],
+            'card_2_image'=>['sometimes','image','max:2048'],
+            'card_2_description'=>['required','string'],
+            
+            'closing_title'=>['required','string'],
+            'closing_statement'=>['required','string'],
+        ]);
+
+        $estateExperience=EstateExperience::findOrFail($validated['id']);
+        
+        if($request->hasFile('card_1_image')){
+            if($estateExperience->card_1_image){
+                Storage::disk('public')->delete($estateExperience->card_1_image);
+            }
+            $file_name = Str::uuid() . '.' . $request->file('card_1_image')->getClientOriginalExtension();
+            $media_path = $request->file('card_1_image')->storeAs('estate-experience', $file_name, 'public');
+            if($media_path === false){
+                return response()->json([
+                    'message' => 'Failed to store media.'
+                ], 500);
+            }
+            $validated['card_1_image']=$media_path;
+        }
+
+        if($request->hasFile('card_2_image')){
+            if($estateExperience->card_2_image){
+                Storage::disk('public')->delete($estateExperience->card_2_image);
+            }
+            $file_name = Str::uuid() . '.' . $request->file('card_2_image')->getClientOriginalExtension();
+            $media_path = $request->file('card_2_image')->storeAs('estate-experience', $file_name, 'public');
+            if($media_path === false){
+                return response()->json([
+                    'message' => 'Failed to store media.'
+                ], 500);
+            }
+            $validated['card_2_image']=$media_path;
+        }
+
+        $estateExperience->update($validated);
+
+        return response()->json([
+            'message'=>'Estate Experience updated successfully',
             'estateExperience'=>$estateExperience
         ]);
     }
