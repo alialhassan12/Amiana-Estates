@@ -80,6 +80,7 @@ Route::middleware('auth:sanctum')->group(function(){
     
     // estate experience
     Route::post('/estate-experience/create',[EstateExperienceController::class,'insert'])->name('estate.experience.create');
+    Route::put('/estate-experience/update',[EstateExperienceController::class,'updateEstateExperience'])->name('estate.experience.update');
     
     // Estate Experience Specifications
     Route::post('/estate-experience-specification/create',[ExperienceSpecificationController::class,'insert'])->name('estate.experience.specification.create');

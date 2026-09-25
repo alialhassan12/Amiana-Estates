@@ -14,6 +14,20 @@ export interface EstateExperience{
     card_2_image_url:string;
     closing_title:string;
     closing_statement:string;
+    specifications_title:string;
+    specifications_subTitle:string;
+    specifications_description:string;
+    specifications?:EstateExperienceSpecification[];
+    created_at:Date;
+    updated_at:Date;
+}
+
+export interface EstateExperienceSpecification{
+    id:number;
+    estate_experience_id:number;
+    title:string;
+    short_description:string;
+    icon:string;
     created_at:Date;
     updated_at:Date;
 }
