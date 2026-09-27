@@ -14,7 +14,7 @@ const DesignPhilosophy = () => {
     const typedDesignPhilosophy = designPhilosophy as DesignPhilosophyType | undefined;
 
     return (
-        <div ref={ref} className="flex flex-col gap-8 sm:gap-12 lg:gap-16 py-8 sm:py-14 lg:py-20 mt-4 sm:mt-8 lg:mt-12">
+        <div ref={ref} className="flex flex-col gap-8 sm:gap-12 lg:gap-16 mt-4 sm:mt-8 lg:mt-12">
             {/* heading */}
             <div className="flex flex-col gap-2 sm:gap-3">
                 <p data-aos="fade-up" className="text-primary tracking-widest uppercase text-xs sm:text-sm font-normal">

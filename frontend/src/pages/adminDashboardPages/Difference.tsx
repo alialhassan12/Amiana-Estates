@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useGetDesignPhilosophy, useUpdateDesignPhilosophy } from "../../hooks/useDesignPhilosophy";
+import { useGetDifference, useUpdateDifference } from "../../hooks/useDifference";
 import { useForm } from "react-hook-form";
+import { editDifferenceSchema, type EditDifferenceFormData } from "../../schemas/editDifferenceSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { editDesignPhilosophySchema, type EditDesignPhilosophyFormData } from "../../schemas/editDesignPhilosophySchema";
 import {
     Check,
     Loader2,
@@ -16,28 +16,19 @@ import {
     Sparkles,
     ImageIcon,
     UploadCloud,
-    Trash2,
-    Plus,
-    Pencil,
-    GripVertical,
-    ListOrdered,
-    Info,
     X,
+    Info,
 } from "lucide-react";
 import { toast } from "../../components/ui/toast";
 import { Button } from "../../components/ui/button";
-import DesignPhilosophyPreview from "../../components/admin/DesignPhilosophyPreview";
-import type { DesignPhilosophy as DesignPhilosophyType, DesignPhilosophyPrinciple } from "../../@types/designPhilosophy";
-import AddPrincipleDialog from "../../components/admin/AddPrincipleDialog";
-import DeleteAlertDialog from "../../components/admin/DeleteAlertDialog";
-import { useDeletePhilosophyPrinciple } from "../../hooks/useDesignPhilosophyPrinciple";
+import DifferencePreview from "../../components/admin/DifferencePreview";
+import type { Difference as DifferenceType } from "../../@types/difference";
 
+const Difference = () => {
+    const { data: differenceData, isLoading: isLoadingDifference } = useGetDifference();
+    const difference = differenceData?.difference as DifferenceType | undefined;
 
-const DesignPhilosophy = () => {
-    const { data: designPhilosophy, isLoading } = useGetDesignPhilosophy();
-    const { mutateAsync: updateDesignPhilosophyMutation, isPending: isSaving } = useUpdateDesignPhilosophy();
-
-    const {mutateAsync:deletePhilosophyPrinciple,isPending:isDeleting}=useDeletePhilosophyPrinciple();
+    const { mutateAsync: updateDifference, isPending: isUpdatingDifference } = useUpdateDifference();
 
     // View Modes for responsive admin UX: "split" | "form" | "preview"
     const [viewMode, setViewMode] = useState<"split" | "form" | "preview">("split");
@@ -46,79 +37,45 @@ const DesignPhilosophy = () => {
     // Simulated device viewport in the live preview: "desktop" | "tablet" | "mobile"
     const [deviceMode, setDeviceMode] = useState<"desktop" | "tablet" | "mobile">("desktop");
 
-    // Local selected file state for UI info
+    // Local selected file state for UI details
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-    const [openAdd,setOpenAdd]=useState<boolean>(false);
-    const [openDelete,setOpenDelete]=useState<boolean>(false);
-    const [selectedPrinciple,setSelectedPrinciple]=useState<DesignPhilosophyPrinciple | null>(null);
 
     const {
         register,
-        handleSubmit,
         reset,
-        watch,
         setValue,
+        watch,
+        handleSubmit,
         formState: { errors, isDirty }
-    } = useForm<EditDesignPhilosophyFormData>({
-        resolver: zodResolver(editDesignPhilosophySchema),
+    } = useForm<EditDifferenceFormData>({
+        resolver: zodResolver(editDifferenceSchema),
         defaultValues: {
             title: "",
             subTitle: "",
             description: "",
             image: null,
-            image_url: ""
+            image_url: "",
         },
         mode: "onChange"
     });
 
-    // Synchronize form with fetched design philosophy
+    const watchedValues = watch();
+    const imageUrl = watch("image_url");
+
+    // Synchronize form with fetched difference data
     useEffect(() => {
-        if (designPhilosophy) {
+        if (difference) {
             reset({
-                title: designPhilosophy.title || "",
-                subTitle: designPhilosophy.subTitle || "",
-                description: designPhilosophy.description || "",
+                title: difference.title || "",
+                subTitle: difference.subTitle || "",
+                description: difference.description || "",
                 image: null,
-                image_url: designPhilosophy.image_url || ""
+                image_url: difference.image_url || "",
             });
             setSelectedFile(null);
         }
-    }, [designPhilosophy, reset]);
+    }, [difference, reset]);
 
-    const watchedValues = watch();
-    const imageUrl = watch("image_url");
-    
-
-    const handleOpenDelete=(principle:DesignPhilosophyPrinciple)=>{
-        if(!principle) return;
-        setSelectedPrinciple(principle);
-        setOpenDelete(true);
-    }
-
-    const handleCloseDelete=()=>{
-        setOpenDelete(false);
-        setSelectedPrinciple(null);
-    }
-
-    const handleDelete=async()=>{
-        try {
-            if(!selectedPrinciple) return;
-            await deletePhilosophyPrinciple(selectedPrinciple.id);
-            toast.add({
-                description: "Principle deleted successfully",
-                type: "success"
-            });
-            handleCloseDelete();
-        } catch (error:any) {
-            toast.add({
-                description: error.message || "Failed to delete principle",
-                type: "error"
-            });
-        }
-    }
-
-    // Handle media file upload
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -129,22 +86,20 @@ const DesignPhilosophy = () => {
         setValue("image_url", objectUrl, { shouldDirty: true, shouldValidate: true });
     };
 
-    // Remove or revert newly selected local file
     const handleRevertSelectedImage = () => {
         setSelectedFile(null);
         setValue("image", null, { shouldDirty: true });
-        setValue("image_url", designPhilosophy?.image_url || "", { shouldDirty: true });
+        setValue("image_url", difference?.image_url || "", { shouldDirty: true });
     };
 
-    // Reset form to original loaded state
     const handleReset = () => {
-        if (!designPhilosophy) return;
+        if (!difference) return;
         reset({
-            title: designPhilosophy.title || "",
-            subTitle: designPhilosophy.subTitle || "",
-            description: designPhilosophy.description || "",
+            title: difference.title || "",
+            subTitle: difference.subTitle || "",
+            description: difference.description || "",
             image: null,
-            image_url: designPhilosophy.image_url || ""
+            image_url: difference.image_url || "",
         });
         setSelectedFile(null);
 
@@ -154,12 +109,11 @@ const DesignPhilosophy = () => {
         });
     };
 
-    // Submit Section 1 data (title, subTitle, description, image)
-    const onSubmit = async (data: EditDesignPhilosophyFormData) => {
+    const onSubmit = async (data: EditDifferenceFormData) => {
         try {
             const formData = new FormData();
-            if (designPhilosophy?.id) {
-                formData.append("id", String(designPhilosophy.id));
+            if (difference?.id) {
+                formData.append("id", String(difference.id));
             }
             formData.append("title", data.title);
             formData.append("subTitle", data.subTitle);
@@ -169,31 +123,28 @@ const DesignPhilosophy = () => {
                 formData.append("image", data.image);
             }
 
-            await updateDesignPhilosophyMutation(formData);
+            await updateDifference(formData);
+            setSelectedFile(null);
 
             toast.add({
-                description: "Design Philosophy updated successfully",
+                description: "Difference section updated successfully",
                 type: "success"
             });
         } catch (error: any) {
-            console.error("Error updating design philosophy:", error);
+            console.error("Error updating difference:", error);
             toast.add({
-                description: typeof error === "string" ? error : (error?.message || "Failed to update design philosophy"),
+                description: typeof error === "string" ? error : (error?.message || "Failed to update difference"),
                 type: "error"
             });
         }
     };
 
-    const typedDesignPhilosophy = designPhilosophy as DesignPhilosophyType | undefined;
-    const displayPrinciples: DesignPhilosophyPrinciple[] = (typedDesignPhilosophy?.design_philosophy_principles && typedDesignPhilosophy.design_philosophy_principles.length > 0)
-        ? typedDesignPhilosophy.design_philosophy_principles:[];
-
-    if (isLoading) {
+    if (isLoadingDifference) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[400px] gap-3">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 <p className="body-text text-sm text-neutral-500 uppercase tracking-wider">
-                    Loading Design Philosophy Settings...
+                    Loading Difference Section...
                 </p>
             </div>
         );
@@ -205,10 +156,10 @@ const DesignPhilosophy = () => {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-[#ECE9E5] pb-5">
                 <div>
                     <h1 className="title text-2xl sm:text-3xl text-neutral-900 tracking-tight">
-                        Design Philosophy Section
+                        Difference Section
                     </h1>
                     <p className="body-text text-xs sm:text-sm text-neutral-500 mt-1">
-                        Configure the design philosophy headline, descriptive narratives, showcase image, and architectural principles.
+                        Configure the distinctive headline, narrative statement, and showcase visual of The Amiana Difference.
                     </p>
                 </div>
 
@@ -218,7 +169,7 @@ const DesignPhilosophy = () => {
                         variant="outline"
                         size="sm"
                         onClick={handleReset}
-                        disabled={isSaving || !isDirty}
+                        disabled={isUpdatingDifference || !isDirty}
                         className="text-neutral-700 border-[#ECE9E5] hover:bg-[#E9E8E5] gap-1.5 text-xs uppercase tracking-wider cursor-pointer"
                     >
                         <RotateCcw className="h-3.5 w-3.5" />
@@ -229,10 +180,10 @@ const DesignPhilosophy = () => {
                         type="button"
                         size="sm"
                         onClick={handleSubmit(onSubmit)}
-                        disabled={isSaving}
+                        disabled={isUpdatingDifference}
                         className="bg-primary hover:bg-primary/90 text-white gap-2 text-xs uppercase tracking-wider font-semibold shadow-xs cursor-pointer"
                     >
-                        {isSaving ? (
+                        {isUpdatingDifference ? (
                             <>
                                 <Loader2 className="h-4 w-4 animate-spin" />
                                 Saving...
@@ -362,7 +313,7 @@ const DesignPhilosophy = () => {
                 </button>
             </div>
 
-            {/* Main Content Area*/}
+            {/* Main Content Area */}
             <div className="w-full">
                 <div
                     className={`grid gap-8 items-start ${
@@ -383,7 +334,7 @@ const DesignPhilosophy = () => {
                             onSubmit={handleSubmit(onSubmit)}
                             className="bg-white border border-[#ECE9E5] rounded-xl p-5 sm:p-7 shadow-xs space-y-7"
                         >
-                            {/* */}
+                            {/* Section Content & Typography */}
                             <div className="space-y-6">
                                 <div>
                                     <h3 className="body-text text-xs uppercase tracking-widest text-primary font-bold mb-4 flex items-center gap-2">
@@ -392,7 +343,7 @@ const DesignPhilosophy = () => {
                                     </h3>
 
                                     <div className="space-y-4">
-                                        {/* */}
+                                        {/* Pre-Heading */}
                                         <div>
                                             <label className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
                                                 Pre-Heading Category
@@ -400,11 +351,11 @@ const DesignPhilosophy = () => {
                                             <input
                                                 type="text"
                                                 {...register("title")}
-                                                placeholder="E.g. DESIGN PHILOSOPHY"
+                                                placeholder="E.g. THE AMIANA DIFFERENCE"
                                                 className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#ECE9E5] rounded-sm text-sm text-neutral-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors uppercase tracking-wider"
                                             />
                                             <p className="body-text text-[10px] text-neutral-500 mt-1 italic">
-                                                Appears in gold uppercase above the main philosophy statement.
+                                                Appears in gold uppercase with a hairline accent above the headline.
                                             </p>
                                             {errors.title && (
                                                 <p className="body-text text-xs text-red-500 mt-1">
@@ -413,17 +364,20 @@ const DesignPhilosophy = () => {
                                             )}
                                         </div>
 
-                                        {/* */}
+                                        {/* Headline / Subtitle */}
                                         <div>
                                             <label className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
                                                 Main Headline / Subtitle
                                             </label>
                                             <textarea
-                                                rows={3}
+                                                rows={2}
                                                 {...register("subTitle")}
-                                                placeholder="E.g. ARCHITECTURAL MASTERY ROOTED IN TIMELESS ELEGANCE"
+                                                placeholder="E.g. LUXURY, THOUGHTFULLY REDEFINED."
                                                 className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#ECE9E5] rounded-sm text-sm text-neutral-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors font-serif uppercase resize-y leading-relaxed"
                                             />
+                                            <p className="body-text text-[10px] text-neutral-500 mt-1 italic">
+                                                The primary Bodoni serif signature statement.
+                                            </p>
                                             {errors.subTitle && (
                                                 <p className="body-text text-xs text-red-500 mt-1">
                                                     {errors.subTitle.message}
@@ -431,17 +385,20 @@ const DesignPhilosophy = () => {
                                             )}
                                         </div>
 
-                                        {/* Description */}
+                                        {/* Narrative Description */}
                                         <div>
                                             <label className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
-                                                Philosophy Description
+                                                Narrative Description
                                             </label>
                                             <textarea
-                                                rows={4}
+                                                rows={5}
                                                 {...register("description")}
-                                                placeholder="Describe the architectural perspective and design ethos..."
+                                                placeholder="Describe the distinctive architectural and luxury standard..."
                                                 className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#ECE9E5] rounded-sm text-sm text-neutral-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-y leading-relaxed"
                                             />
+                                            <p className="body-text text-[10px] text-neutral-500 mt-1 italic">
+                                                Comprehensive editorial prose articulating what sets Amiana Estates apart.
+                                            </p>
                                             {errors.description && (
                                                 <p className="body-text text-xs text-red-500 mt-1">
                                                     {errors.description.message}
@@ -451,7 +408,7 @@ const DesignPhilosophy = () => {
                                     </div>
                                 </div>
 
-                                {/* Image Upload Component */}
+                                {/* Showcase Image Card */}
                                 <div className="border-t border-[#ECE9E5] pt-5">
                                     <h3 className="body-text text-xs uppercase tracking-widest text-primary font-bold mb-4 flex items-center gap-2">
                                         <ImageIcon className="h-3.5 w-3.5" />
@@ -460,19 +417,21 @@ const DesignPhilosophy = () => {
 
                                     <div className="space-y-3">
                                         {imageUrl && (
-                                            <div className="relative rounded-lg overflow-hidden border border-[#ECE9E5] bg-neutral-900 h-44 group">
+                                            <div className="relative rounded-lg overflow-hidden border border-[#ECE9E5] bg-neutral-900 h-48 group">
                                                 <img
                                                     src={imageUrl}
-                                                    alt="Design Philosophy Preview"
+                                                    alt="Difference Showcase Preview"
                                                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                                                 />
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end justify-between p-3">
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end justify-between p-3.5">
                                                     <div className="text-white text-xs">
-                                                        <span className="font-semibold block truncate max-w-[200px]">
+                                                        <span className="font-semibold block truncate max-w-[220px]">
                                                             {selectedFile ? selectedFile.name : "Active Section Image"}
                                                         </span>
                                                         <span className="text-[10px] text-white/70">
-                                                            {selectedFile ? `${(selectedFile.size / (1024 * 1024)).toFixed(2)} MB (Staged)` : "Live on portfolio"}
+                                                            {selectedFile
+                                                                ? `${(selectedFile.size / (1024 * 1024)).toFixed(2)} MB (Staged)`
+                                                                : "Live on portfolio"}
                                                         </span>
                                                     </div>
 
@@ -480,7 +439,7 @@ const DesignPhilosophy = () => {
                                                         <button
                                                             type="button"
                                                             onClick={handleRevertSelectedImage}
-                                                            className="flex items-center gap-1 px-2 py-1 bg-red-600/80 hover:bg-red-600 text-white rounded text-[11px] font-medium transition-colors cursor-pointer"
+                                                            className="flex items-center gap-1 px-2.5 py-1 bg-red-600/85 hover:bg-red-600 text-white rounded text-[11px] font-medium transition-colors cursor-pointer"
                                                             title="Discard staged image and revert to saved"
                                                         >
                                                             <X className="h-3 w-3" />
@@ -504,93 +463,18 @@ const DesignPhilosophy = () => {
                                                 <p className="body-text text-xs text-neutral-700 font-medium">
                                                     {selectedFile ? (
                                                         <span className="text-primary font-semibold">
-                                                            Replace file ({selectedFile.name})
+                                                            Replace image ({selectedFile.name})
                                                         </span>
                                                     ) : (
                                                         "Click or drag image to upload / replace"
                                                     )}
                                                 </p>
                                                 <p className="body-text text-[10px] text-neutral-400">
-                                                    Supports JPEG, PNG, WebP (Max 2MB)
+                                                    Supports JPEG, PNG, WebP (Max 5MB)
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            {/* design philosophy principles */}
-                            <div className="border-t border-[#ECE9E5] pt-6">
-                                <div className="flex items-center justify-between mb-4">
-                                    <div className="flex items-center gap-2">
-                                        <ListOrdered className="h-4 w-4 text-primary" />
-                                        <div>
-                                            <h3 className="body-text text-xs uppercase tracking-widest text-primary font-bold">
-                                                Design Philosophy Principles
-                                            </h3>
-                                            <p className="body-text text-[11px] text-neutral-500">
-                                                Curate the foundational pillars displayed in the section grid.
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    {/* Add Principle Button */}
-                                    <button
-                                        type="button"
-                                        onClick={()=>{setOpenAdd(true);}}
-                                        title="Principles add functionality will be connected next"
-                                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-neutral-900/90 text-white rounded text-xs uppercase tracking-wider font-semibold opacity-90 hover:opacity-100 transition-opacity shadow-2xs"
-                                    >
-                                        <Plus className="h-3.5 w-3.5" />
-                                        <span>Add Principle</span>
-                                    </button>
-                                </div>
-
-                                {/* Principles List Cards */}
-                                <div className="space-y-3">
-                                    {displayPrinciples.map((item, index) => (
-                                        <div
-                                            key={item.id ?? index}
-                                            className="group relative bg-[#FAF9F6]/80 hover:bg-white border border-[#ECE9E5] hover:border-neutral-300 rounded-lg p-3.5 sm:p-4 transition-all shadow-2xs"
-                                        >
-                                            <div className="flex items-center justify-between gap-3 mb-2.5">
-                                                <div className="flex items-center gap-2">
-                                                    <GripVertical className="h-3.5 w-3.5 text-neutral-400 cursor-grab" />
-                                                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-primary/10 text-primary uppercase tracking-wider">
-                                                        Principle #{String(index + 1).padStart(2, "0")}
-                                                    </span>
-                                                </div>
-                                                <div className="flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
-                                                    <button
-                                                        type="button"
-                                                    
-                                                        title="Edit principle"
-                                                        className="p-1 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 transition-colors"
-                                                    >
-                                                        <Pencil className="h-3.5 w-3.5" />
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        onClick={()=>handleOpenDelete(item)}
-                                                        title="Delete principle"
-                                                        className="p-1 rounded text-neutral-400 hover:text-red-600 hover:bg-red-50 transition-colors"
-                                                    >
-                                                        <Trash2 className="h-3.5 w-3.5" />
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div className="space-y-1 pl-5">
-                                                <h4 className="title uppercase text-xs sm:text-sm font-medium text-neutral-900 tracking-wide">
-                                                    {item.title}
-                                                </h4>
-                                                {item.description && (
-                                                    <p className="body-text text-xs text-neutral-500 font-light leading-relaxed line-clamp-2">
-                                                        {item.description}
-                                                    </p>
-                                                )}
-                                            </div>
-                                        </div>
-                                    ))}
                                 </div>
                             </div>
                         </form>
@@ -627,18 +511,17 @@ const DesignPhilosophy = () => {
                                 <div
                                     className={`
                                         transition-all duration-300 ease-in-out bg-white rounded-lg overflow-hidden shadow-2xl relative
-                                        ${deviceMode === "desktop" ? "w-full min-h-[550px]" : ""}
-                                        ${deviceMode === "tablet" ? "w-[768px] max-w-full min-h-[600px] border-4 border-neutral-800" : ""}
-                                        ${deviceMode === "mobile" ? "w-[375px] max-w-full min-h-[600px] border-4 border-neutral-800 rounded-2xl" : ""}
+                                        ${deviceMode === "desktop" ? "w-full min-h-[520px]" : ""}
+                                        ${deviceMode === "tablet" ? "w-[768px] max-w-full min-h-[580px] border-4 border-neutral-800" : ""}
+                                        ${deviceMode === "mobile" ? "w-[375px] max-w-full min-h-[580px] border-4 border-neutral-800 rounded-2xl" : ""}
                                     `}
                                 >
-                                    {/* Design Philosophy Live Preview */}
-                                    <DesignPhilosophyPreview
-                                        title={watchedValues.title || designPhilosophy?.title}
-                                        subTitle={watchedValues.subTitle || designPhilosophy?.subTitle}
-                                        description={watchedValues.description || designPhilosophy?.description}
-                                        image_url={imageUrl || designPhilosophy?.image_url}
-                                        principles={displayPrinciples}
+                                    {/* Difference Live Preview */}
+                                    <DifferencePreview
+                                        title={watchedValues.title || difference?.title}
+                                        subTitle={watchedValues.subTitle || difference?.subTitle}
+                                        description={watchedValues.description || difference?.description}
+                                        image_url={imageUrl ?? difference?.image_url}
                                         deviceMode={deviceMode}
                                     />
                                 </div>
@@ -647,22 +530,8 @@ const DesignPhilosophy = () => {
                     </div>
                 </div>
             </div>
-            <AddPrincipleDialog
-                open={openAdd}
-                setOpen={setOpenAdd}
-                design_philosophy_id={designPhilosophy?.id}
-            />
-            <DeleteAlertDialog
-                open={openDelete}
-                setOpen={handleCloseDelete}
-                title="Delete Design Philosophy Principle"
-                description={`Are you sure you want to delete ${selectedPrinciple?.title} ?`}
-                onConfirm={handleDelete}
-                onCancel={handleCloseDelete}
-                isLoading={isDeleting}
-            />
         </div>
     );
 };
 
-export default DesignPhilosophy;
+export default Difference;

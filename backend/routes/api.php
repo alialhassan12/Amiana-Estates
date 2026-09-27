@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DesignPhilosophyController;
 use App\Http\Controllers\Api\DesignPhilosophyPrincipleController;
+use App\Http\Controllers\Api\DifferenceController;
 use App\Http\Controllers\Api\EstateController;
 use App\Http\Controllers\Api\EstateExperienceController;
 use App\Http\Controllers\Api\ExperienceSpecificationController;
@@ -37,6 +38,8 @@ Route::get('/design-philosophy',[DesignPhilosophyController::class,'getDesignPhi
 Route::get('/location',[LocationController::class,'getLocation'])->name('location.get');
 // socials
 Route::get('/socials',[SocialController::class,'getSocials'])->name('socials.get');
+// difference
+Route::get('/difference',[DifferenceController::class,'getDifference'])->name('difference.get');
 
 
 // protected routes
@@ -102,5 +105,6 @@ Route::middleware('auth:sanctum')->group(function(){
     // location
     Route::post('/location/update',[LocationController::class,'updateOrInsertLocation'])->name('location.update-or-insert');
 
-    
+    // difference
+    Route::put('/difference/update',[DifferenceController::class,'update'])->name('difference.update');
 });

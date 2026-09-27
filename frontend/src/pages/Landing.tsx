@@ -7,6 +7,7 @@ import EstateExperience from "../components/EstateExperience";
 import DesignPhilosophy from "../components/DesignPhilosophy";
 import Location from "../components/Location";
 import Footer from "../components/Footer";
+import Difference from "../components/Differenece";
 
 const Landing = () => {
     return (
@@ -34,8 +35,8 @@ const Landing = () => {
                     <div id="design-philosophy">
                         <DesignPhilosophy/>
                     </div>
-                    <div id="location">
-                        <Location/>
+                    <div id="the-difference">
+                        <Difference/>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import {
     Building, 
     BuildingComplex, 
     Compass, 
+    Gem, 
     Home, 
     House, 
     Houses, 
@@ -10,6 +11,7 @@ import {
     List, 
     Loader2, 
     LogOut, 
+    Settings, 
     Shapes, 
     X 
 } from "lucide-react";
@@ -28,6 +30,8 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
 
     const location = useLocation();
     const path = location.pathname;
+
+    const isSettings=path.startsWith('/dashboard/settings');
 
     const {mutateAsync,isPending:isLoggingOut}=useLogout();
     const handleLogout=async()=>{
@@ -88,6 +92,12 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
                     href: "/design-philosophy",
                     path: "/dashboard/design-philosophy",
                     icon: ArchiveRestoreIcon
+                },
+                {
+                    title: "Difference",
+                    href: "/difference",
+                    path: "/dashboard/difference",
+                    icon: Gem
                 },
             ]
         },
@@ -219,7 +229,21 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
                         })}
                     </div>
 
-                    <div className="px-3 py-4 border-t border">
+                    <div className="flex flex-col px-3 py-4 gap-2 border-t border">
+                        {/* Settings */}
+                        <Link 
+                            to={"/dashboard/settings"} 
+                            className={`flex flex-row items-center gap-2.5 px-3 py-2 group cursor-pointer hover:bg-[#E9E8E5] transition-all duration-200 rounded-sm ${
+                                isSettings
+                                    ? "bg-[#E9E8E5] border-l-2 border-primary font-bold text-neutral-900"
+                                    : "text-neutral-700 hover:text-neutral-900"
+                            }`}
+                        >
+                            <Settings className={`h-4 w-4 shrink-0 transition-colors ${isSettings ? "text-primary" : "text-neutral-900 group-hover:text-primary"}`}/>
+                            <p className="uppercase body-text tracking-widest text-xs truncate">
+                                Settings
+                            </p>
+                        </Link>
                         {/* Logout */}
                         <div onClick={handleLogout} className="flex flex-row items-center gap-2.5 px-3 py-2 group cursor-pointer hover:bg-[#E9E8E5] transition-all duration-200 rounded-sm">
                             {isLoggingOut? <Loader2 className="h-4 w-4 shrink-0 transition-colors text-neutral-700 hover:text-neutral-900"/>:<LogOut className="h-4 w-4 shrink-0 transition-colors text-neutral-700 hover:text-neutral-900"/>}
