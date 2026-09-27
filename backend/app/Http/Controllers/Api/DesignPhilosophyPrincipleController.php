@@ -13,7 +13,7 @@ class DesignPhilosophyPrincipleController extends Controller
         $validated=$request->validate([
             'design_philosophy_id'=>['required'],
             'title'=>['required','string'],
-            'description'=>['nullable','string'],
+            'description'=>['sometimes','string'],
         ]);
 
         $designPhilosophy = DesignPhilosophy::findOrFail($validated['design_philosophy_id']);
@@ -21,7 +21,7 @@ class DesignPhilosophyPrincipleController extends Controller
         $designPhilosophyPrinciple = DesignPhilosophyPrinciple::create([
             'design_philosophy_id'=>$validated['design_philosophy_id'],
             'title'=>$validated['title'],
-            'description'=>$validated['description']
+            'description'=>$validated['description']??null
         ]);
 
         return response()->json([

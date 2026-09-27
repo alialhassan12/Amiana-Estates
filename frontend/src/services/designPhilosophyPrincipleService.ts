@@ -13,7 +13,7 @@ export const addPhilosophyPrinciple=async({design_philosophy_id,title,descriptio
         });
         return response.data;
     } catch (error:any) {
-        console.log("error in adding philosophy principle",error);
+        console.log("error in adding philosophy principle",error.response.data.message || error.message);
         throw error.response.data.message || error.message;
     }
 }

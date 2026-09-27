@@ -220,31 +220,6 @@ const Location = () => {
                 {/* Map Container */}
                 <div ref={mapContainerRef} className="w-full h-full" />
 
-                {/* Map Style Switcher */}
-                {/* <div className="absolute top-4 left-4 z-20 flex flex-wrap items-center gap-1.5 p-1 bg-[#161513]/85 backdrop-blur-md border border-white/10 shadow-lg">
-                    <span className="hidden sm:flex items-center gap-1 text-[10px] uppercase tracking-wider text-neutral-400 font-medium px-2 py-1">
-                        <Layers className="w-3 h-3 text-primary" />
-                        View
-                    </span>
-                    {MAP_STYLES.map((style) => {
-                        const isActive = activeStyle === style.url;
-                        return (
-                            <button
-                                key={style.id}
-                                type="button"
-                                onClick={() => handleStyleChange(style.url)}
-                                className={`px-2.5 py-1 text-[11px] uppercase tracking-wider transition-all duration-200 cursor-pointer ${
-                                    isActive
-                                        ? "bg-primary text-black font-semibold shadow-sm"
-                                        : "text-neutral-300 hover:text-white hover:bg-white/10"
-                                }`}
-                            >
-                                {style.label}
-                            </button>
-                        );
-                    })}
-                </div> */}
-
                 {/* Bottom Info & Actions Card */}
                 <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-auto z-20 max-w-sm sm:max-w-md p-4 sm:p-5 bg-[#161513]/90 backdrop-blur-md border border-white/10 text-white shadow-2xl space-y-3.5">
                     <div className="flex items-start justify-between gap-3">

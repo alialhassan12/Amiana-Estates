@@ -27,8 +27,7 @@ const NavBar = () => {
         { label: 'penthouse', path: 'penthouse', id:"penthouse" },
         { label: 'estate experience', path: 'estate-experience', id:"estate-experience" },
         { label: 'Amiana Philosophy', path: 'design-philosophy', id:"design-philosophy" },
-        { label: 'gallery', path: 'gallery', id:"gallery" },
-        { label: 'location', path: 'location', id:"location" },
+        { label: 'the difference', path: 'the-difference', id:"the-difference" },
         { label: 'enquiry', path: 'enquiry', id:"enquiry" }
     ];
 

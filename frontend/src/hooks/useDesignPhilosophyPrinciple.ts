@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addPhilosophyPrinciple, deletePhilosophyPrinciple, updatePhilosophyPrinciple } from "../services/designPhilosophyPrincipleService";
+import { designPhilosophyKeys } from "./useDesignPhilosophy";
 
 export const designPhilosophyPrincipleKeys={
     all:['design-philosophy-principle'],
@@ -15,6 +16,7 @@ export const useAddPhilosophyPrinciple=()=>{
         })=>addPhilosophyPrinciple({design_philosophy_id,title,description}),
         onSuccess:()=>{
             queryClient.invalidateQueries({queryKey:designPhilosophyPrincipleKeys.all});
+            queryClient.invalidateQueries({queryKey:designPhilosophyKeys.all});
         },
     })
 }
@@ -25,6 +27,7 @@ export const useDeletePhilosophyPrinciple=()=>{
         mutationFn:(id:number)=>deletePhilosophyPrinciple(id),
         onSuccess:()=>{
             queryClient.invalidateQueries({queryKey:designPhilosophyPrincipleKeys.all});
+            queryClient.invalidateQueries({queryKey:designPhilosophyKeys.all});
         },
     })
 }
@@ -45,6 +48,7 @@ export const useUpdatePhilosophyPrinciple=()=>{
         })=>updatePhilosophyPrinciple({id,design_philosophy_id,title,description}),
         onSuccess:()=>{
             queryClient.invalidateQueries({queryKey:designPhilosophyPrincipleKeys.all});
+            queryClient.invalidateQueries({queryKey:designPhilosophyKeys.all});
         },
     })
 }
