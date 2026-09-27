@@ -5,10 +5,15 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\DesignPhilosophy;
 use App\Models\DesignPhilosophyPrinciple;
+use App\Services\PortfolioCacheService;
 use Illuminate\Http\Request;
 
 class DesignPhilosophyPrincipleController extends Controller
 {
+    public function __construct(
+        private PortfolioCacheService $portfolioCache
+    ){}
+
     public function insert(Request $request){
         $validated=$request->validate([
             'design_philosophy_id'=>['required'],
@@ -24,6 +29,8 @@ class DesignPhilosophyPrincipleController extends Controller
             'description'=>$validated['description']??null
         ]);
 
+        $this->portfolioCache->forgetDesignPhilosophy();
+
         return response()->json([
             'message'=>'Design philosophy principle created successfully',
             'design_philosophy_principle'=>$designPhilosophyPrinciple
@@ -34,6 +41,8 @@ class DesignPhilosophyPrincipleController extends Controller
         $designPhilosophyPrinciple = DesignPhilosophyPrinciple::findOrFail($id);
 
         $designPhilosophyPrinciple->delete();
+
+        $this->portfolioCache->forgetDesignPhilosophy();
         
         return response()->json([
             'message'=>'Design philosophy principle deleted successfully'
@@ -57,6 +66,8 @@ class DesignPhilosophyPrincipleController extends Controller
             'description'=>$validated['description']
         ]);
 
+        $this->portfolioCache->forgetDesignPhilosophy();
+        
         return response()->json([
             'message'=>'Design philosophy principle updated successfully',
             'design_philosophy_principle'=>$designPhilosophyPrinciple

@@ -4,13 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Difference;
+use App\Services\PortfolioCacheService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class DifferenceController extends Controller
 {
+    public function __construct(
+        private PortfolioCacheService $portfolioCache
+    ){}
+
     public function getDifference(){
-        $difference=Difference::first();
+        $difference=$this->portfolioCache->getDifference();
 
         return response()->json([
             'message'=>'Difference fetched successfully',
@@ -46,6 +51,8 @@ class DifferenceController extends Controller
         }
 
         $diff->update($validated);
+
+        $this->portfolioCache->forgetDifference();
 
         return response()->json([
             'message' => 'Difference updated successfully',

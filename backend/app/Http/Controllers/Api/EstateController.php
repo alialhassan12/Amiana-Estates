@@ -7,12 +7,19 @@ use App\Models\Company;
 use App\Models\Estate;
 use App\Models\Property;
 use App\Models\PropertyType;
+use App\Services\PortfolioCacheService;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class EstateController extends Controller
 {
+    public function __construct(
+        private PortfolioCacheService $portfolioCache
+    )
+    {
+    }
+
     public function insert(Request $request){
         $validated= $request->validate([
             'title' => ['required','string','max:100'],
@@ -34,6 +41,8 @@ class EstateController extends Controller
 
         $estate = Estate::create($validated);
 
+        $this->portfolioCache->forgetEstate();
+
         return response()->json([
             'message' => 'Estate created successfully',
             'estate' => $estate,
@@ -41,21 +50,11 @@ class EstateController extends Controller
     }
 
     public function getEstate(){
-        $estate=Estate::first();
-
-        $levelOfArchitecture=Company::first('number_of_floors');
-        $totalResidences=Property::count();
-        $propertyType=PropertyType::where('is_penthouse',true)->first();
-        $propertyTypeArea=$propertyType?->area.' '.$propertyType?->area_unit;
+        $data=$this->portfolioCache->getEstate();
 
         return response()->json([
             'message'=>'Estate data fetched successfully',
-            'data'=>[
-                    'estate'=>$estate,
-                    'levelOfArchitecture'=>$levelOfArchitecture->number_of_floors,
-                    'totalResidences'=>$totalResidences,
-                    'propertyTypeArea'=>$propertyTypeArea
-                ]
+            'data'=>$data
         ],200);
     }
 
@@ -86,6 +85,8 @@ class EstateController extends Controller
         }
 
         $estate->update($validated);
+        
+        $this->portfolioCache->forgetEstate();
 
         return response()->json([
             'message'=>'Estate updated successfully',
