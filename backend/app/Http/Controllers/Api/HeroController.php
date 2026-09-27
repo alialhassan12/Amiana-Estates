@@ -4,11 +4,19 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Services\PortfolioCacheService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class HeroController extends Controller
 {
+
+    public function __construct(
+        private PortfolioCacheService $portfolioCache
+    )
+    {
+    }
+
     public function insert(Request $request){
         $validated=$request->validate([
             'name'=>['required','string'],
@@ -45,6 +53,7 @@ class HeroController extends Controller
         }
 
         $company = Company::create($validated);
+        $this->portfolioCache->forgetHero();
 
         return response()->json([
             'message'=>"Company created successfully!",
@@ -53,7 +62,8 @@ class HeroController extends Controller
     }
 
     public function getHero(){
-        $company= Company::first();
+        $company=$this->portfolioCache->getHero();
+        
         return response()->json([
             'hero'=>$company
         ]);
@@ -101,6 +111,8 @@ class HeroController extends Controller
             'hero_media_type'=>$validated['hero_media_type'],
             'hero_media'=>$validated['hero_media'] ?? $company->hero_media
         ]);
+
+        $this->portfolioCache->forgetHero();
 
         return response()->json([
             'message'=>"Company updated successfully!",

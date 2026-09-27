@@ -4,11 +4,19 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\PenthouseMedia;
+use App\Services\PortfolioCacheService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class PenthouseMediaController extends Controller
 {
+
+    public function __construct(
+        private PortfolioCacheService $portfolioCache
+    )
+    {
+    }
+
     public function insertPenthouseMedia(Request $request){
         $validated=$request->validate([
             'penthouse_id'=>['required','exists:penthouses,id'],
@@ -25,6 +33,8 @@ class PenthouseMediaController extends Controller
             'description'=>$request->description?? null,
         ]);
 
+        $this->portfolioCache->forgetPenthouse();
+        
         return response()->json([
             "message"=>"media inserted successfully",
             "media_path"=>$media->media_path,
@@ -40,6 +50,8 @@ class PenthouseMediaController extends Controller
         }
         
         $media->delete();
+
+        $this->portfolioCache->forgetPenthouse();
 
         return response()->json([
             "message"=>"media deleted successfully",

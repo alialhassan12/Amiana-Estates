@@ -5,10 +5,18 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\PropertyType;
 use App\Models\Residence;
+use App\Services\PortfolioCacheService;
 use Illuminate\Http\Request;
 
 class ResidencesController extends Controller
 {
+
+    public function __construct(
+        private PortfolioCacheService $portfolioCache
+    )
+    {
+    }
+
     public function insert(Request $request){
         $validated=$request->validate([
             'title'=>['required','string','max:100'],
@@ -18,6 +26,8 @@ class ResidencesController extends Controller
 
         $residence=Residence::create($validated);
 
+        $this->portfolioCache->forgetResidences();
+
         return response()->json([
             'message'=>'Residence created successfully',
             'residence'=>$residence,
@@ -25,28 +35,11 @@ class ResidencesController extends Controller
     }
 
     public function getResidences(){
-        $residence=Residence::first();
-
-        $propertyTypes=PropertyType::with('features')->orderBy('display_order','asc')->get();
-        
-        // get only first 3 features for each property type
-        $propertyTypes->each(function($propertyTypes){
-            $propertyTypes->setRelation(
-                'features',
-                $propertyTypes->features->take(3)
-            );
-        });
-
-        $featuredProperty=$propertyTypes->where('is_penthouse',true)->first();
-        $propertyTypes=$propertyTypes->where('is_penthouse',false)->values();
+        $data = $this->portfolioCache->getResidences();
 
         return response()->json([
             'message'=>'Residences data fetched successfully',
-            'data'=>[
-                'residence'=>$residence,
-                'propertyTypes'=>$propertyTypes,
-                'featuredProperty'=>$featuredProperty,
-            ]
+            'data'=>$data
         ],200);
     }
 
@@ -60,6 +53,8 @@ class ResidencesController extends Controller
         $residence=Residence::where('id',$validated['id'])->firstOrFail();
         
         $residence->update($validated);
+
+        $this->portfolioCache->forgetResidences();
 
         return response()->json([
             'message'=>'Residences data updated successfully',

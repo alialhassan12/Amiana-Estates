@@ -4,10 +4,19 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\PropertyFeature;
+use App\Models\PropertyType;
+use App\Services\PortfolioCacheService;
 use Illuminate\Http\Request;
 
 class PropertyFeaturesController extends Controller
 {
+
+    public function __construct(
+        private PortfolioCacheService $portfolioCache
+    )
+    {
+    }
+
     public function insert(Request $request){
         $validated=$request->validate([
             'property_type_id'=>['required','exists:property_types,id'],
@@ -15,11 +24,19 @@ class PropertyFeaturesController extends Controller
             'value'=>['required','string'],
         ]);
 
+        $propertyType=PropertyType::where('id',$validated['property_type_id'])->firstOrFail();
+
         //auto insert display order value of property feature
         $propertyFeatureCount = PropertyFeature::where('property_type_id',$validated['property_type_id'])->count();
         $validated['display_order']=$propertyFeatureCount+1;
 
         $propertyFeature = PropertyFeature::create($validated);
+
+        // forget cache of the property types
+        if($propertyType->is_penthouse){
+            $this->portfolioCache->forgetPenthouse();
+        }
+        $this->portfolioCache->forgetResidences();
 
         return response()->json([
             'message' => 'Property Feature created successfully',
@@ -61,6 +78,7 @@ class PropertyFeaturesController extends Controller
 
     public function deletePropertyFeature(int $id){
         $propertyFeature=PropertyFeature::findOrFail($id);
+        $propertyType=PropertyType::where('id',$propertyFeature->property_type_id)->firstOrFail();
 
         //auto update display order value of property feature
         PropertyFeature::where('property_type_id', $propertyFeature->property_type_id)
@@ -68,6 +86,12 @@ class PropertyFeaturesController extends Controller
         ->decrement('display_order');
 
         $propertyFeature->delete();
+
+        // forget cache of the property types
+        if($propertyType->is_penthouse){
+            $this->portfolioCache->forgetPenthouse();
+        }
+        $this->portfolioCache->forgetResidences();
 
         return response()->json([
             'message' => 'Property Feature deleted successfully',
@@ -83,6 +107,8 @@ class PropertyFeaturesController extends Controller
             'value'=>['required','string'],
         ]);
 
+        $propertyType=PropertyType::where('id',$validated['property_type_id'])->firstOrFail();
+
         $propertyFeature=PropertyFeature::findOrFail($validated['id']);
         if($propertyFeature->property_type_id !== $validated['property_type_id']){
             //auto update display order value of property feature
@@ -97,6 +123,12 @@ class PropertyFeaturesController extends Controller
         }
 
         $propertyFeature->update($validated);
+
+        // forget cache of the property types
+        if($propertyType->is_penthouse){
+            $this->portfolioCache->forgetPenthouse();
+        }
+        $this->portfolioCache->forgetResidences();
 
         return response()->json([
             'message' => 'Property Feature updated successfully',
