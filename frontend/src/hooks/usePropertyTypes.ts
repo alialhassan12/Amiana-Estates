@@ -14,10 +14,11 @@ export const useGetPropertyTypes=(page:number=1,search?:string)=>{
     })
 }
 
-export const useGetPropertyTypesForFeatures=()=>{
+export const useGetPropertyTypesForFeatures=(enabled:boolean=true)=>{
     return useQuery({
         queryKey:propertyTypeKeys.all,
         queryFn:()=>getPropertyTypesForFeatures(),
+        enabled
     })
 }
 

@@ -137,7 +137,7 @@ const Footer = () => {
     }, [isInView]);
 
     return (
-        <footer ref={ref} className="bg-[#161513] px-6 py-10 text-white sm:px-10 sm:py-12 md:px-16 lg:px-20">
+        <footer ref={ref} className="bg-[#161513] px-6 py-10 text-white sm:px-10 sm:py-12 md:px-16 lg:px-20 mt-6">
             <div className="mx-auto max-w-7xl">
                 <div className="flex flex-col gap-8 border-b border-white/10 pb-8 sm:flex-row sm:items-end sm:justify-between sm:gap-12 sm:pb-10">
                     <div className="max-w-xl">
