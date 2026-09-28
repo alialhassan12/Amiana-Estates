@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { getEstateExperience, updateEstateExperience } from "../services/EstateExperienceService"
 
-const estateExperienceKeys={
+export const estateExperienceKeys={
     all:['estate-experience'],
 }
 

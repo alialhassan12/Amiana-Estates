@@ -1,31 +1,7 @@
 import { useGetEstateExperience } from "../hooks/useEstateExperience";
 import { useInView } from "../hooks/useInView";
 import EstateExperienceCard from "./EstateExperienceCard";
-import {
-    CircleParking,
-    Shield,
-    Video,
-    ArrowUpDown,
-    PhoneCall,
-    Zap,
-    Droplet,
-    Wifi,
-    Eye,
-    Store
-} from "lucide-react"
-
-const iconMap= {
-    CircleParking,
-    Shield,
-    Video,
-    ArrowUpDown,
-    PhoneCall,
-    Zap,
-    Droplet,
-    Wifi,
-    Eye,
-    Store,
-};
+import { getAvailableIcon } from "./admin/AVAILABLE_ICONS";
 
 const EstateExperience=()=>{
     const {ref,isInView}=useInView({rootMargin:"250px"});
@@ -90,7 +66,7 @@ const EstateExperience=()=>{
                     {/* first col */}
                     <div className="w-full md:w-1/2 flex flex-col items-center">
                         {firstColumnSpecifications.map((specification: any, index: number) => {
-                            const Icon = iconMap[specification?.icon as keyof typeof iconMap];
+                            const Icon = getAvailableIcon(specification?.icon);
                             return (
                                 <div
                                     key={specification.id}
@@ -119,7 +95,7 @@ const EstateExperience=()=>{
                     {/* second col */}
                     <div className="w-full md:w-1/2 flex flex-col items-center">
                         {secondColumnSpecifications.map((specification: any, index: number) => {
-                            const Icon = iconMap[specification?.icon as keyof typeof iconMap];
+                            const Icon = getAvailableIcon(specification?.icon);
                             return (
                                 <div
                                     key={specification.id}

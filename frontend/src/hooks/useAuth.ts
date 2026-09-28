@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { checkAuth, login, logout, type LoginType } from "../services/authService";
+import { checkAuth, login, logout, updatePassword, type LoginType, type UpdatePasswordType } from "../services/authService";
 import type { User } from "../@types/user";
 import axios from "axios";
 
@@ -48,6 +48,17 @@ export const useLogout=()=>{
         mutationFn:()=>logout(),
         onSuccess:()=>{
             queryClient.setQueryData<User>(authKeys.user, null);
+        }
+    })
+}
+
+export const useUpdatePassword=()=>{
+    const queryClient=useQueryClient();
+
+    return useMutation({
+        mutationFn:(data:UpdatePasswordType)=>updatePassword(data),
+        onSuccess:()=>{
+            queryClient.invalidateQueries({queryKey:authKeys.user});
         }
     })
 }

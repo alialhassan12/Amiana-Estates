@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DesignPhilosophyController;
 use App\Http\Controllers\Api\DesignPhilosophyPrincipleController;
@@ -20,8 +21,8 @@ use App\Http\Controllers\Api\SocialController;
 use Illuminate\Support\Facades\Route;
 
 // public routes
-Route::post('/login',[AuthController::class,'login'])->name('login');
-// Route::post('/register',[AuthController::class,'register'])->name('register');
+Route::post('/login',[AuthController::class,'login'])->middleware('throttle:login')->name('login');
+
 // hero
 Route::get('/hero',[HeroController::class,'getHero'])->name('hero.get');
 // estate
@@ -90,7 +91,11 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/estate-experience/update',[EstateExperienceController::class,'updateEstateExperience'])->name('estate.experience.update');
     
     // Estate Experience Specifications
-    Route::post('/estate-experience-specification/create',[ExperienceSpecificationController::class,'insert'])->name('estate.experience.specification.create');
+    Route::post('/estate-experience-specifications/create',[ExperienceSpecificationController::class,'insert'])->name('estate.experience.specification.create');
+    Route::get('/estate-experience-specifications',[ExperienceSpecificationController::class,'getExperienceSpecifications'])->name('estate.experience.specification.get');
+    Route::delete('/estate-experience-specifications/delete/{id}',[ExperienceSpecificationController::class,'delete'])->name('estate.experience.specification.delete');
+    Route::put('/estate-experience-specifications/update',[ExperienceSpecificationController::class,'edit'])->name('estate.experience.specification.edit');
+    
 
     // design philosophy
     Route::post('/design-philosophy/create',[DesignPhilosophyController::class,'insert'])->name('design.philosophy.create');
@@ -101,10 +106,20 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/design-philosophy/principles/update',[DesignPhilosophyPrincipleController::class,'update'])->name('design.philosophy.principles.update');
     Route::delete('/design-philosophy/principles/delete/{id}',[DesignPhilosophyPrincipleController::class,'delete'])->name('design.philosophy.principles.delete');
     
-
-    // location
-    Route::post('/location/update',[LocationController::class,'updateOrInsertLocation'])->name('location.update-or-insert');
-
     // difference
     Route::put('/difference/update',[DifferenceController::class,'update'])->name('difference.update');
+
+    // settings
+    Route::get('/settings/company',[CompanyController::class,'getCompanyInfo'])->name('settings.company.get');
+    Route::put('/settings/company/update',[CompanyController::class,'updateCompanyInfo'])->name('settings.company.update');
+    Route::put('/settings/company/update/contact',[CompanyController::class,'updateContactInfo'])->name('settings.company.contact.update');
+
+    Route::get('/settings/socials',[SocialController::class,'getSocials'])->name('settings.socials.get');
+    Route::post('/settings/socials/create',[SocialController::class,'addSocial'])->name('settings.socials.add');
+    Route::put('/settings/socials/update',[SocialController::class,'updateSocial'])->name('settings.socials.update');
+    Route::delete('/settings/socials/delete/{id}',[SocialController::class,'deleteSocial'])->name('settings.socials.delete');
+    
+    Route::put('/settings/location/update',[LocationController::class,'updateLocation'])->name('settings.location.update');
+
+    Route::put('/settings/password/update',[AuthController::class,'updatePassword'])->name('settings.password.update');
 });

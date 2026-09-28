@@ -17,7 +17,7 @@ class AuthController extends Controller
 
         $user=User::where('email',$validated['email'])->first();
 
-        if(!$user || Hash::check($validated['password'],$user->password)){
+        if(!$user || !Hash::check($validated['password'],$user->password)){
             return response()->json([
                 'message'=>'Invalid Credentials'
             ],401);
@@ -84,5 +84,35 @@ class AuthController extends Controller
             "message"=>"Authenticated",
             "user"=>$user
         ]);
+    }
+
+    public function updatePassword(Request $request){
+        $validated=$request->validate([
+            'current_password'=>['required','string'],
+            'new_password'=>['required','string','min:8'],
+            'confirm_password'=>['required','string','min:8']
+        ]);
+        $user=$request->user();
+        
+        if(!Hash::check($validated['current_password'],$user->password)){
+            return response()->json([
+                'message'=>'Current password does not match'
+            ],401);
+        }
+
+        if($validated['new_password']!==$validated['confirm_password']){
+            return response()->json([
+                'message'=>'New password and confirm password do not match'
+            ],400);
+        }
+
+        $user->update([
+            'password'=>Hash::make($validated['new_password'])
+        ]);
+        
+        return response()->json([
+            'message'=>'Password updated successfully',
+            'user'=>$user
+        ],200);
     }
 }
