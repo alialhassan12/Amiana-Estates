@@ -7,6 +7,7 @@ export const addPropertyTypeSchema = z.object({
     imageFile: z.instanceof(File).refine((file) => file.size <= 2097152, "Image size must be less than 2MB"),
     previewImage: z.string().optional(),
     is_penthouse: z.boolean(),
+    total_properties: z.number().min(0, "Total properties must be at least 0"),
 });
 
 export type AddPropertyTypeFormData = z.infer<typeof addPropertyTypeSchema>;

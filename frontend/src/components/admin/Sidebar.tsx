@@ -112,12 +112,6 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
                     icon: Shapes
                 },
                 {
-                    title: "Properties",
-                    href: "/properties",
-                    path: "/dashboard/properties",
-                    icon: Houses
-                },
-                {
                     title:"Property Features",
                     href:"/property-features",
                     path:"/dashboard/property-features",

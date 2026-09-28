@@ -36,7 +36,11 @@ export const addPropertyType=async(data:FormData)=>{
 
 export const editPropertyType= async(data:FormData)=>{
     try{
-        const response = await axiosInstance.put('/property/types/edit',data);
+        const response = await axiosInstance.put('/property/types/edit',data,{
+            headers:{
+                "Content-Type": "multipart/form-data"
+            }
+        });
         return response.data;
     }catch(error:any){
         console.log("error fetching property types:",error);
