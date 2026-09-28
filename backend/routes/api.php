@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DesignPhilosophyController;
 use App\Http\Controllers\Api\DesignPhilosophyPrincipleController;
 use App\Http\Controllers\Api\DifferenceController;
+use App\Http\Controllers\Api\EnquiryController;
 use App\Http\Controllers\Api\EstateController;
 use App\Http\Controllers\Api\EstateExperienceController;
 use App\Http\Controllers\Api\ExperienceSpecificationController;
@@ -42,6 +43,8 @@ Route::get('/socials',[SocialController::class,'getSocials'])->name('socials.get
 // difference
 Route::get('/difference',[DifferenceController::class,'getDifference'])->name('difference.get');
 
+// enquiries
+Route::post('/enquiries/submit',[EnquiryController::class,'submitEnquiry'])->middleware('throttle:login')->name('submit.enquiry');
 
 // protected routes
 Route::middleware('auth:sanctum')->group(function(){
@@ -122,4 +125,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/settings/location/update',[LocationController::class,'updateLocation'])->name('settings.location.update');
 
     Route::put('/settings/password/update',[AuthController::class,'updatePassword'])->name('settings.password.update');
+
+    // enquiries
+    Route::get('/enquiries',[EnquiryController::class,'getEnquiries'])->name('get.enquiries');
 });

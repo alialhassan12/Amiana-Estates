@@ -12,6 +12,7 @@ import {
     ListChecks, 
     Loader2, 
     LogOut, 
+    Mail, 
     Settings, 
     Shapes, 
     X 
@@ -103,7 +104,7 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
             ]
         },
         {
-            title: "Properties",
+            title: "Lists",
             items: [
                 {
                     title: "Property Types",
@@ -122,6 +123,12 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
                     href:"/experience-specifications",
                     path:"/dashboard/experience-specifications",
                     icon:ListChecks
+                },
+                {
+                    title:"Enquiries",
+                    href:"/enquiries",
+                    path:"/dashboard/enquiries",
+                    icon:Mail
                 },
             ]
         }

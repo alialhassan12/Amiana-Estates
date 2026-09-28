@@ -8,6 +8,7 @@ import DesignPhilosophy from "../components/DesignPhilosophy";
 import Location from "../components/Location";
 import Footer from "../components/Footer";
 import Difference from "../components/Differenece";
+import Enquiry from "../components/Enquiry";
 
 const Landing = () => {
     return (
@@ -37,6 +38,9 @@ const Landing = () => {
                     </div>
                     <div id="the-difference">
                         <Difference/>
+                    </div>
+                    <div id="enquiry">
+                        <Enquiry/>
                     </div>
                 </div>
             </div>
