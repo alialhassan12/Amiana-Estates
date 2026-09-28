@@ -35,6 +35,7 @@ const EditPropertyType=({propertyType,open,setOpen}:EditPropertyTypeProps)=>{
             imageFile:undefined,
             previewImage:propertyType?.image_url || '',
             is_penthouse:Boolean(propertyType?.is_penthouse || false),
+            total_properties:propertyType?.total_properties || 0,
         },
         mode:'onChange',
     });
@@ -49,6 +50,7 @@ const EditPropertyType=({propertyType,open,setOpen}:EditPropertyTypeProps)=>{
             imageFile:undefined,
             previewImage:propertyType.image_url || '',
             is_penthouse:Boolean(propertyType.is_penthouse),
+            total_properties:propertyType.total_properties || 0,
         });
     },[propertyType,reset]);
 
@@ -74,6 +76,8 @@ const EditPropertyType=({propertyType,open,setOpen}:EditPropertyTypeProps)=>{
             formData.append("description",data.description);
             formData.append("area",data.area.toString());
             formData.append("is_penthouse",data.is_penthouse?"1":"0");
+            formData.append("total_properties",data.total_properties.toString());
+            
             if(data.imageFile){
                 formData.append("image",data.imageFile);
             }
@@ -108,42 +112,58 @@ const EditPropertyType=({propertyType,open,setOpen}:EditPropertyTypeProps)=>{
                 <form onSubmit={handleSubmit(onSubmit)} className="grid min-h-0 grid-rows-[minmax(0,1fr)_auto]">
                     <div className="min-h-0 overflow-y-auto custom-scrollbar">
                         <div className="p-4 sm:p-6 space-y-6">
-                            <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
-                                <div className="sm:col-span-3">
-                                    <label htmlFor="property-type-title" className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
-                                        Property Type Title
-                                    </label>
-                                    <input
-                                        id="property-type-title"
-                                        type="text"
-                                        {...register("title")}
-                                        placeholder="E.g. 3-Bedroom Residence"
-                                        className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#ECE9E5] rounded-sm text-sm text-neutral-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-                                    />
-                                    {errors.title && (
-                                        <p className="body-text text-xs text-red-500 mt-1.5">{errors.title.message}</p>
-                                    )}
-                                </div>
+                            {/* type title */}
+                            <div className="sm:col-span-3">
+                                <label htmlFor="new-property-type-title" className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
+                                    Property Type Title
+                                </label>
+                                <input
+                                    id="new-property-type-title"
+                                    type="text"
+                                    {...register("title")}
+                                    placeholder="E.g. 3-Bedroom Residence"
+                                    className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#ECE9E5] rounded-sm text-sm text-neutral-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                                />
+                                {errors.title && (
+                                    <p className="body-text text-xs text-red-500 mt-1.5">{errors.title.message}</p>
+                                )}
+                            </div>
 
-                                <div className="sm:col-span-2">
-                                    <label htmlFor="property-type-area" className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                                <div className="">
+                                    <label htmlFor="new-property-type-area" className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
                                         Area
                                     </label>
                                     <div className="relative">
                                         <input
-                                            id="property-type-area"
+                                            id="new-property-type-area"
                                             type="number"
                                             min="1"
                                             {...register("area", { valueAsNumber: true })}
                                             className="w-full px-3.5 py-2.5 pr-12 bg-[#FAF9F6] border border-[#ECE9E5] rounded-sm text-sm text-neutral-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                                         />
-                                        <span className="absolute right-3.5 top-1/2 -translate-y-1/2 body-text text-xs text-neutral-500 pointer-events-none">
-                                            {propertyType?.area_unit}
-                                        </span>
+                                        <span className="absolute right-3.5 top-1/2 -translate-y-1/2 body-text text-xs text-neutral-500 pointer-events-none">m²</span>
                                     </div>
                                     {errors.area && (
                                         <p className="body-text text-xs text-red-500 mt-1.5">{errors.area.message}</p>
                                     )}
+                                </div>
+                                <div className="">
+                                    <label htmlFor="new-property-type-total" className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
+                                        Total Property
+                                    </label>
+                                    <div className="relative">
+                                        <input
+                                            id="new-property-type-total"
+                                            type="number"
+                                            min="0"
+                                            {...register("total_properties", { valueAsNumber: true })}
+                                            className="w-full px-3.5 py-2.5 pr-12 bg-[#FAF9F6] border border-[#ECE9E5] rounded-sm text-sm text-neutral-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                                        />
+                                        {errors.total_properties && (
+                                            <p className="body-text text-xs text-red-500 mt-1.5">{errors.total_properties.message}</p>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
 

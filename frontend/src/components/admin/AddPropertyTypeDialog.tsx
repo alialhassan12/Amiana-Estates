@@ -20,6 +20,7 @@ const emptyFormValues: AddPropertyTypeFormData = {
     imageFile:undefined,
     previewImage: "",
     is_penthouse: false,
+    total_properties:0,
 };
 
 const AddPropertyTypeDialog = ({ open, setOpen, displayOrder }: AddPropertyTypeDialogProps) => {
@@ -65,6 +66,7 @@ const AddPropertyTypeDialog = ({ open, setOpen, displayOrder }: AddPropertyTypeD
             formData.append("display_order", displayOrder.toString());
             formData.append("is_penthouse", data.is_penthouse ? "1" : "0");
             formData.append("image", data.imageFile);
+            formData.append("total_properties", data.total_properties.toString());
 
             await addPropertyType(formData);
             toast.add({
@@ -97,24 +99,25 @@ const AddPropertyTypeDialog = ({ open, setOpen, displayOrder }: AddPropertyTypeD
                 <form onSubmit={handleSubmit(onSubmit)} className="grid min-h-0 grid-rows-[minmax(0,1fr)_auto]">
                     <div className="min-h-0 overflow-y-auto custom-scrollbar">
                         <div className="p-4 sm:p-6 space-y-6">
-                            <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
-                                <div className="sm:col-span-3">
-                                    <label htmlFor="new-property-type-title" className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
-                                        Property Type Title
-                                    </label>
-                                    <input
-                                        id="new-property-type-title"
-                                        type="text"
-                                        {...register("title")}
-                                        placeholder="E.g. 3-Bedroom Residence"
-                                        className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#ECE9E5] rounded-sm text-sm text-neutral-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-                                    />
-                                    {errors.title && (
-                                        <p className="body-text text-xs text-red-500 mt-1.5">{errors.title.message}</p>
-                                    )}
-                                </div>
+                            {/* type title */}
+                            <div className="sm:col-span-3">
+                                <label htmlFor="new-property-type-title" className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
+                                    Property Type Title
+                                </label>
+                                <input
+                                    id="new-property-type-title"
+                                    type="text"
+                                    {...register("title")}
+                                    placeholder="E.g. 3-Bedroom Residence"
+                                    className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#ECE9E5] rounded-sm text-sm text-neutral-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                                />
+                                {errors.title && (
+                                    <p className="body-text text-xs text-red-500 mt-1.5">{errors.title.message}</p>
+                                )}
+                            </div>
 
-                                <div className="sm:col-span-2">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                                <div className="">
                                     <label htmlFor="new-property-type-area" className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
                                         Area
                                     </label>
@@ -131,6 +134,23 @@ const AddPropertyTypeDialog = ({ open, setOpen, displayOrder }: AddPropertyTypeD
                                     {errors.area && (
                                         <p className="body-text text-xs text-red-500 mt-1.5">{errors.area.message}</p>
                                     )}
+                                </div>
+                                <div className="">
+                                    <label htmlFor="new-property-type-total" className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
+                                        Total Property
+                                    </label>
+                                    <div className="relative">
+                                        <input
+                                            id="new-property-type-total"
+                                            type="number"
+                                            min="0"
+                                            {...register("total_properties", { valueAsNumber: true })}
+                                            className="w-full px-3.5 py-2.5 pr-12 bg-[#FAF9F6] border border-[#ECE9E5] rounded-sm text-sm text-neutral-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                                        />
+                                        {errors.total_properties && (
+                                            <p className="body-text text-xs text-red-500 mt-1.5">{errors.total_properties.message}</p>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
 

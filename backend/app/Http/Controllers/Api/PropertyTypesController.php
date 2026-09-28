@@ -26,7 +26,8 @@ class PropertyTypesController extends Controller
             'area'=>['required','integer'],
             'area_unit'=>['required','string'],
             'display_order'=>['required','integer','min:1'],
-            'is_penthouse'=>['nullable','boolean']
+            'is_penthouse'=>['nullable','boolean'],
+            'total_properties'=>['required','integer','min:0']
         ]);
 
         if($request->hasFile('image')){
@@ -77,7 +78,8 @@ class PropertyTypesController extends Controller
             'description'=>['required','string'],
             'image'=>['nullable','image','max:2048'],
             'area'=>['required','integer'],
-            'is_penthouse'=>['required','boolean']
+            'is_penthouse'=>['required','boolean'],
+            'total_properties'=>['required','integer','min:0']
         ]);
 
         $propertyType =PropertyType::findOrFail($validated['id']);
@@ -103,6 +105,7 @@ class PropertyTypesController extends Controller
             'image'=>$validated['image']??$propertyType->image,
             'area'=>$validated['area'],
             'is_penthouse'=>$validated['is_penthouse'],
+            'total_properties'=>$validated['total_properties']
         ]);
 
         $this->portfolioCache->forgetResidences();
@@ -114,9 +117,9 @@ class PropertyTypesController extends Controller
     }
 
     public function deletePropertyType(int $id){
-        $propertyType=PropertyType::with('properties')->findOrFail($id);
+        $propertyType=PropertyType::findOrFail($id);
         
-        if($propertyType->properties->count()>0){
+        if($propertyType->total_properties > 0){
             return response()->json([
                 'message'=>'Property Type has properties associated with it',
             ],400);

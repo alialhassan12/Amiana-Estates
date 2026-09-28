@@ -139,6 +139,7 @@ const PropertyTypes=()=>{
                                 <th scope="col" className="px-4 sm:px-6 py-3 body-text text-[10px] font-semibold uppercase tracking-widest text-neutral-500">Property Type</th>
                                 <th scope="col" className="px-4 sm:px-6 py-3 body-text text-[10px] font-semibold uppercase tracking-widest text-neutral-500">Description</th>
                                 <th scope="col" className="px-4 sm:px-6 py-3 body-text text-[10px] font-semibold uppercase tracking-widest text-neutral-500 whitespace-nowrap">Area</th>
+                                <th scope="col" className="px-4 sm:px-6 py-3 body-text text-[10px] font-semibold uppercase tracking-widest text-neutral-500 whitespace-nowrap">Total Properties</th>
                                 <th scope="col" className="px-4 sm:px-6 py-3 body-text text-[10px] font-semibold uppercase tracking-widest text-neutral-500 whitespace-nowrap">Featured</th>
                                 <th scope="col" className="px-4 sm:px-6 py-3 body-text text-[10px] font-semibold uppercase tracking-widest text-neutral-500 text-right whitespace-nowrap">Actions</th>
                             </tr>
@@ -204,6 +205,11 @@ const PropertyTypes=()=>{
                                             <td className="px-4 sm:px-6 py-4">
                                                 <span className="body-text text-sm text-neutral-800 whitespace-nowrap">
                                                     {propertyType.area} {propertyType.area_unit}
+                                                </span>
+                                            </td>
+                                            <td className="px-4 sm:px-6 py-4 text-center">
+                                                <span className="body-text text-sm text-neutral-800 whitespace-nowrap">
+                                                    {propertyType?.total_properties}
                                                 </span>
                                             </td>
                                             <td className="px-4 sm:px-6 py-4">

@@ -40,7 +40,7 @@ class PortfolioCacheService
             function(){
                 $estate=Estate::first();
                 $levelOfArchitecture=Company::first('number_of_floors');
-                $totalResidences=Property::count();
+                $totalResidences = PropertyType::sum('total_properties');
                 $propertyType=PropertyType::where('is_penthouse',true)->first();
                 $propertyTypeArea=$propertyType?->area.' '.$propertyType?->area_unit;
                 return [

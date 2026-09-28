@@ -12,6 +12,7 @@ export const editPropertyTypeSchema=z.object({
         ),
     previewImage:z.string().optional(),
     is_penthouse:z.boolean().default(false).optional(),
+    total_properties:z.number().min(0,"Total properties must be at least 0"),
 });
 
 export type EditPropertyTypeFormData=z.infer<typeof editPropertyTypeSchema>;
