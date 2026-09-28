@@ -8,23 +8,20 @@ use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {
-    public function updateOrInsertLocation(Request $request){
+    public function updateLocation(Request $request){
         $validated=$request->validate([
-            'title'=>['required','string'],
-            'subTitle'=>['required','string'],
-            'description'=>['nullable','string'],
             'address'=>['required','string'],
-            'latitude'=>['required','string'],
-            'longitude'=>['required','string'],
-            'map_zoom'=>['required','integer'],
+            'latitude'=>['required','numeric'],
+            'longitude'=>['required','numeric'],
         ]);
 
-        $location = Location::first();
-        if($location){
-            $location->update($validated);
-        }else{
-            $location = Location::create($validated);
-        }
+        $location = Location::firstOrFail();
+        
+        $location->update([
+            'latitude'=>$validated['latitude'],
+            'longitude'=>$validated['longitude'],
+            'address'=>$validated['address']
+        ]);
 
         return response()->json([
             'message'=>'Location updated successfully',
@@ -33,7 +30,7 @@ class LocationController extends Controller
     }
 
     public function getLocation(){
-        $location = Location::firstOrFail();
+        $location = Location::select("id","latitude","longitude","address")->firstOrFail();
         return response()->json([
             'location'=>$location
         ],200);

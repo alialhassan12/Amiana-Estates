@@ -14,6 +14,7 @@ import Experience from "./adminDashboardPages/Experience";
 import DesignPhilosophy from "./adminDashboardPages/DesignPhilosophy";
 import Difference from "./adminDashboardPages/Difference";
 import Settings from "./adminDashboardPages/Settings";
+import ExperienceSpecifications from "./adminDashboardPages/ExperienceSpecifications";
 
 const AdminDashboard = () => {
     const [openSidebar, setOpenSidebar] = useState<boolean>(true);
@@ -63,7 +64,7 @@ const AdminDashboard = () => {
                         <Route path="/design-philosophy" element={<DesignPhilosophy/>}/>
                         <Route path="/difference" element={<Difference/>}/>
                         <Route path="/settings" element={<Settings/>}/>
-
+                        <Route path="/experience-specifications" element={<ExperienceSpecifications/>}/>
                     </Routes>
                 </main>
             </div>

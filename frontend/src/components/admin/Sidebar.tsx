@@ -9,6 +9,7 @@ import {
     Houses, 
     LayoutDashboard, 
     List, 
+    ListChecks, 
     Loader2, 
     LogOut, 
     Settings, 
@@ -122,6 +123,12 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
                     path:"/dashboard/property-features",
                     icon:List
                 },
+                {
+                    title:"Experience Specifications",
+                    href:"/experience-specifications",
+                    path:"/dashboard/experience-specifications",
+                    icon:ListChecks
+                },
             ]
         }
     ];
@@ -217,7 +224,7 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
                                                             }`}
                                                         />
                                                     )}
-                                                    <p className="uppercase body-text tracking-widest text-xs truncate">
+                                                    <p className="uppercase body-text tracking-widest text-xs ">
                                                         {item.title}
                                                     </p>
                                                 </Link>

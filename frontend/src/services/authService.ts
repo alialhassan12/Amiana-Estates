@@ -27,41 +27,49 @@ export const login=async({
 
         return response.data.user;
         
-    } catch (error:any) {
-        console.log(error)
+    } catch (error: any) {
+        const message = error?.response?.data?.message || "Failed to log in. Please check your credentials.";
         toast.add({
-            description:error.response.data.message,
-            type:'error'
-        })
-        throw new Error(error.response.data.message)
+            description: message,
+            type: 'error'
+        });
+        throw error;
     }
 }
 
-export const checkAuth=async()=>{
+export const checkAuth = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        return null;
+    }
+    const response = await axiosInstance.get('/auth/check');
+    return response.data.user;
+}
+
+export const logout = async () => {
     try {
-        const token = localStorage.getItem('token')
-        if(!token){
+        const token = localStorage.getItem('token');
+        if (!token) {
             return null;
         }
-        const response=await axiosInstance.get('/auth/check');
+        const response = await axiosInstance.post('/logout');
         return response.data.user;
-    } catch (error:any) {
-        console.log(error)
-        throw new Error(error.response.data.message)
-    }
-}
-
-export const logout=async()=>{
-    try {
-        const token = localStorage.getItem('token')
-        if(!token){
-            return null;
-        }
-        const response=await axiosInstance.post('/logout');
+    } finally {
         localStorage.removeItem('token');
+    }
+}
+
+export type UpdatePasswordType={
+    current_password:string,
+    new_password:string,
+    confirm_password:string
+}
+
+export const updatePassword=async(data:UpdatePasswordType)=>{
+    try {
+        const response=await axiosInstance.put('/settings/password/update',data);
         return response.data.user;
-    } catch (error:any) {
-        console.log(error)
-        throw new Error(error.response.data.message)
+    } catch (error: any) {
+        throw error;
     }
 }

@@ -1,30 +1,6 @@
 import type { EstateExperience, EstateExperienceSpecification } from "../../@types/estateExperience";
-import {
-    CircleParking,
-    Shield,
-    Video,
-    ArrowUpDown,
-    PhoneCall,
-    Zap,
-    Droplet,
-    Wifi,
-    Eye,
-    Store,
-    Image as ImageIcon
-} from "lucide-react";
-
-const iconMap = {
-    CircleParking,
-    Shield,
-    Video,
-    ArrowUpDown,
-    PhoneCall,
-    Zap,
-    Droplet,
-    Wifi,
-    Eye,
-    Store,
-};
+import { Image as ImageIcon } from "lucide-react";
+import { getAvailableIcon } from "./AVAILABLE_ICONS";
 
 export type EstateExperiencePreviewProps = {
     estateExperience?: Partial<EstateExperience> | null;
@@ -329,7 +305,7 @@ export default function EstateExperiencePreview({
                     {/* First column */}
                     <div className={`${isSingleColumn ? "w-full" : "w-full md:w-1/2"} flex flex-col items-center`}>
                         {firstColumnSpecs.map((spec: any, index: number) => {
-                            const Icon = iconMap[spec?.icon as keyof typeof iconMap];
+                            const Icon = getAvailableIcon(spec?.icon);
                             const itemNum = index + 1;
                             const formattedNum = itemNum < 10 ? `0${itemNum}` : itemNum;
 
@@ -363,7 +339,7 @@ export default function EstateExperiencePreview({
                     {!isSingleColumn && (
                         <div className="w-full md:w-1/2 flex flex-col items-center">
                             {secondColumnSpecs.map((spec: any, index: number) => {
-                                const Icon = iconMap[spec?.icon as keyof typeof iconMap];
+                                const Icon = getAvailableIcon(spec?.icon);
                                 const itemNum = firstColumnSpecs.length + index + 1;
                                 const formattedNum = itemNum < 10 ? `0${itemNum}` : itemNum;
 

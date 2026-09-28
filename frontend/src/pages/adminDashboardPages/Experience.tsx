@@ -1,24 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../../components/ui/button";
-import {
-    ArrowUpRight,
-    Check,
-    Compass,
-    Edit3,
-    Eye,
-    FileText,
-    Image as ImageIcon,
-    Info,
-    Layers,
-    Loader2,
-    Monitor,
-    RotateCcw,
-    Smartphone,
-    Sparkles,
-    Tablet,
-    UploadCloud,
-    X
-} from "lucide-react";
 import { useForm } from "react-hook-form";
 import { editEstateExperienceSchema, type EditEstateExperienceFormData } from "../../schemas/editEstateExperienceSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,6 +7,7 @@ import { useGetEstateExperience, useUpdateEstateExperience } from "../../hooks/u
 import { toast } from "../../components/ui/toast";
 import { Link } from "react-router-dom";
 import EstateExperiencePreview from "../../components/admin/EstateExperiencePreview";
+import { ArrowUpRight, Check, Compass, Edit3, Eye, FileText, ImageIcon, Info, Layers, Loader2, Monitor, RotateCcw, Smartphone, Sparkles, Tablet, UploadCloud, X } from "lucide-react";
 
 const Experience = () => {
     const { data: estateExperienceData, isLoading } = useGetEstateExperience();
@@ -672,10 +654,10 @@ const Experience = () => {
                                             </span>
                                         </div>
 
-                                        {/* Navigation Button to /experience-specifications */}
+                                        {/* Navigation Button */}
                                         <div className="pt-2">
                                             <Link
-                                                to="/experience-specifications"
+                                                to="/dashboard/experience-specifications"
                                                 className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-neutral-900 hover:bg-neutral-800 text-white rounded text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer shadow-xs"
                                             >
                                                 Manage Experience Specifications
