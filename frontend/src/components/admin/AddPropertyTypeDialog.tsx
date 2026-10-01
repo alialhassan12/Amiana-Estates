@@ -6,6 +6,7 @@ import { toast } from "../ui/toast";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 type AddPropertyTypeDialogProps = {
     open: boolean;
@@ -24,6 +25,8 @@ const emptyFormValues: AddPropertyTypeFormData = {
 };
 
 const AddPropertyTypeDialog = ({ open, setOpen, displayOrder }: AddPropertyTypeDialogProps) => {
+    const [serverError,setServerError] = useState<string>('');
+    
     const { mutateAsync: addPropertyType, isPending: isAdding } = useAddPropertyType();
     const {
         register,
@@ -77,10 +80,8 @@ const AddPropertyTypeDialog = ({ open, setOpen, displayOrder }: AddPropertyTypeD
         } catch (error: unknown) {
             const apiError = error as { response?: { data?: { message?: string } } };
             console.error("Error creating property type:", error);
-            toast.add({
-                description: apiError.response?.data?.message || "Failed to create property type.",
-                type: "error",
-            });
+            
+            setServerError(apiError.response?.data?.message || "Failed to create property type.");
         }
     };
 
@@ -249,6 +250,12 @@ const AddPropertyTypeDialog = ({ open, setOpen, displayOrder }: AddPropertyTypeD
                             </div>
                         </div>
                     </div>
+
+                    {serverError && (
+                        <div className="p-4">
+                            <p className="body-text text-xs text-red-500">{serverError}</p>
+                        </div>
+                    )}
 
                     <div className="flex flex-col-reverse gap-2 border-t border-[#ECE9E5] bg-[#FAF9F6] px-4 py-4 sm:flex-row sm:justify-end">
                         <Button type="submit" disabled={isSubmitting || isAdding} className="bg-primary hover:bg-primary/90 text-white cursor-pointer">

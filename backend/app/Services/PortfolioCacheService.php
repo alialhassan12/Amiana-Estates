@@ -8,7 +8,6 @@ use App\Models\Difference;
 use App\Models\Estate;
 use App\Models\EstateExperience;
 use App\Models\Penthouse;
-use App\Models\Property;
 use App\Models\PropertyType;
 use App\Models\Residence;
 use Illuminate\Support\Facades\Cache;

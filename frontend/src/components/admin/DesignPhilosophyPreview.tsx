@@ -11,35 +11,6 @@ export type DesignPhilosophyPreviewProps = {
     deviceMode?: "desktop" | "tablet" | "mobile";
 };
 
-const defaultPrinciples: DesignPhilosophyPrinciple[] = [
-    {
-        id: 1,
-        design_philosophy_id: 1,
-        title: "Harmonic Proportions",
-        description: "Calibrated to natural golden ratios and circadian sunlight transitions across living spaces."
-    },
-    {
-        id: 2,
-        design_philosophy_id: 1,
-        title: "Noble Materiality",
-        description: "Curated natural stones, hand-finished bronze details, and responsibly sourced European hardwoods."
-    },
-    {
-        id: 3,
-        design_philosophy_id: 1,
-        title: "Contextual Resonance",
-        description: "Structures crafted in deep harmony with their surrounding topography, water features, and horizons."
-    },
-    {
-        id: 4,
-        design_philosophy_id: 1,
-        title: "Enduring Legacy",
-        description: "Engineered with architectural permanence to transcend trends and appreciate across generations."
-    }
-];
-
-const fallbackImage = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80";
-
 const DesignPhilosophyPreview = ({
     title,
     subTitle,
@@ -57,13 +28,13 @@ const DesignPhilosophyPreview = ({
     const displayTitle = title ?? designPhilosophy?.title ?? "DESIGN PHILOSOPHY";
     const displaySubTitle = subTitle ?? designPhilosophy?.subTitle ?? "ARCHITECTURAL MASTERY ROOTED IN TIMELESS ELEGANCE";
     const displayDescription = description ?? designPhilosophy?.description ?? "Every structure we conceive is a dialogue between human emotion and physical sanctuary—merging noble materiality, sculptural geometry, and boundless horizons.";
-    const displayImage = image_url ?? designPhilosophy?.image_url ?? fallbackImage;
+    const displayImage = image_url ?? designPhilosophy?.image_url;
     
     const resolvedPrinciples: DesignPhilosophyPrinciple[] = (principles && principles.length > 0)
         ? principles
         : (designPhilosophy?.design_philosophy_principles && designPhilosophy.design_philosophy_principles.length > 0)
         ? designPhilosophy.design_philosophy_principles
-        : defaultPrinciples;
+        : [];
 
     // Responsive classes tailored for device simulation
     const containerSpacing = isMobile
@@ -149,15 +120,9 @@ const DesignPhilosophyPreview = ({
                     {/* Left Column: Image */}
                     <div className={imageColStyles}>
                         <img 
-                            src={displayImage || fallbackImage}
+                            src={displayImage}
                             alt={displayTitle || "Design Philosophy"}
                             className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000 ease-out"
-                            onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                if (target.src !== fallbackImage) {
-                                    target.src = fallbackImage;
-                                }
-                            }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
                     </div>
@@ -170,17 +135,16 @@ const DesignPhilosophyPreview = ({
                                     key={item.id ?? index} 
                                     className={`group/card relative flex flex-col justify-between bg-[#F4F3F0]/60 dark:bg-neutral-900/40 border border-neutral-200/70 dark:border-neutral-800/70 hover:border-primary/50 dark:hover:border-primary/50 hover:bg-[#F4F3F0] dark:hover:bg-neutral-900 transition-all duration-300 ${cardPaddingStyles}`}
                                 >
-                                    <div>
-                                        {/* Index number and separator line */}
-                                        <div className="flex items-center justify-between gap-3 mb-3 sm:mb-4">
+                                    <div className="flex flex-col items-center justify-center text-center">
+                                        {/* index number */}
+                                        <div className="mb-4">
                                             <span className="title text-2xl sm:text-3xl text-primary/80 group-hover/card:text-primary transition-colors duration-300 font-normal">
                                                 {String(index + 1).padStart(2, "0")}
                                             </span>
-                                            <div className="h-px flex-1 bg-neutral-200 dark:bg-neutral-800 group-hover/card:bg-primary/40 transition-colors duration-300" />
                                         </div>
 
-                                        {/* Title */}
-                                        <h3 className="title uppercase text-sm sm:text-base lg:text-lg text-neutral-900 dark:text-neutral-100 font-normal tracking-wide group-hover/card:text-primary transition-colors duration-300">
+                                        {/* title */}
+                                        <h3 className="title uppercase text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-normal tracking-wide group-hover/card:text-primary transition-colors duration-300">
                                             {item.title}
                                         </h3>
                                     </div>

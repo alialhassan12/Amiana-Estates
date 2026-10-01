@@ -207,7 +207,7 @@ const Settings = () => {
                     }`}
                 >
                     <MapPin className="h-4 w-4" />
-                    Location & Mapbox
+                    Location & Map
                 </button>
 
                 <button

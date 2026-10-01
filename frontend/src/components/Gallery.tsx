@@ -23,7 +23,6 @@ const Gallery: React.FC<GalleryProps> = ({ media = [], className = "" }) => {
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
     const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
-    const isFirstRender = useRef(true);
     const thumbnailsRef = useRef<HTMLDivElement>(null);
     const carouselContainerRef = useRef<HTMLDivElement>(null);
 
@@ -103,7 +102,7 @@ const Gallery: React.FC<GalleryProps> = ({ media = [], className = "" }) => {
                 <div
                     className="flex transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
                     style={{
-                        // Translates based on card percentage width (68%) + gap (24px)
+                        // Translates based on card percentage width
                         transform: `translateX(calc(-${activeIndex} * (68% + 24px)))`,
                     }}
                 >
@@ -140,7 +139,7 @@ const Gallery: React.FC<GalleryProps> = ({ media = [], className = "" }) => {
                                 {/* Deep bottom gradient for editorial typography */}
                                 <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-black/95 via-black/60 to-transparent pointer-events-none" />
 
-                                {/* Plate Badge (Top Left) */}
+                                {/* Plate Badge */}
                                 <div className="absolute top-5 left-5 sm:top-6 sm:left-6 z-20">
                                     <div className="flex items-center gap-2 bg-[#0E0D0B]/85 backdrop-blur-md px-3.5 py-1.5 border border-white/15 text-[11px] sm:text-xs font-mono tracking-widest text-neutral-200 uppercase font-medium shadow-md">
                                         <span>
@@ -149,7 +148,7 @@ const Gallery: React.FC<GalleryProps> = ({ media = [], className = "" }) => {
                                     </div>
                                 </div>
 
-                                {/* Fullscreen / Zoom Button (Top Right) */}
+                                {/* Fullscreen */}
                                 {isActive && (
                                     <button
                                         onClick={(e) => {
@@ -162,16 +161,6 @@ const Gallery: React.FC<GalleryProps> = ({ media = [], className = "" }) => {
                                         <Maximize2 className="w-4 h-4" />
                                     </button>
                                 )}
-
-                                {/* Bottom Editorial Caption */}
-                                <div className="absolute bottom-5 left-5 right-5 sm:bottom-8 sm:left-8 sm:right-8 z-20 flex flex-col gap-2 pointer-events-none">
-                                    <h2 className="title text-2xl sm:text-3xl lg:text-4xl text-white font-normal leading-tight tracking-tight drop-shadow-md">
-                                        {plate.title && plate.plateNum+'.'} {plate.title}
-                                    </h2>
-                                    <p className="body-text text-xs sm:text-sm text-[#C1C2CD] font-normal leading-relaxed max-w-2xl line-clamp-2 sm:line-clamp-3">
-                                        {plate.description}
-                                    </p>
-                                </div>
                             </div>
                         );
                     })}

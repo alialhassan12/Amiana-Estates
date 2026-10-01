@@ -30,7 +30,7 @@ const Difference = () => {
                         className="inline-flex items-center gap-2 mb-3 sm:mb-4"
                     >
                         <p className="text-primary tracking-widest uppercase text-xs sm:text-sm font-medium">
-                            {difference?.title || "The Amiana Difference"}
+                            {difference?.title }
                         </p>
                     </div>
 
@@ -40,7 +40,7 @@ const Difference = () => {
                         data-aos-delay="120"
                         className="title uppercase text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[1.15] tracking-tight text-neutral-900 dark:text-white max-w-2xl"
                     >
-                        {difference?.subTitle || "Luxury, Thoughtfully Redefined."}
+                        {difference?.subTitle }
                     </h2>
 
                     {/* Narrative Description */}
@@ -49,8 +49,7 @@ const Difference = () => {
                         data-aos-delay="220"
                         className="body-text text-sm sm:text-base lg:text-lg text-neutral-600 dark:text-neutral-400 font-light leading-relaxed mt-4 sm:mt-6 max-w-2xl"
                     >
-                        {difference?.description ||
-                            "Amiana Estates brings together refined architecture, spacious living, premium amenities, security, panoramic views, and a carefully considered atmosphere to create a modern residential experience inspired by international luxury standards."}
+                        {difference?.description }
                     </p>
                 </div>
 

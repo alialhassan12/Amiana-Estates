@@ -30,6 +30,14 @@ class PropertyTypesController extends Controller
             'total_properties'=>['required','integer','min:0']
         ]);
 
+        $penthouseExists = PropertyType::where('is_penthouse', true)->exists();
+        
+        if ($validated['is_penthouse'] && $penthouseExists) {
+            return response()->json([
+                'message' => 'Only one featured type is allowed.',
+            ], 400);
+        }
+
         if($request->hasFile('image')){
             $file_name = Str::uuid() . '.' . $request->file('image')->getClientOriginalExtension();
             $image_path = $request->file('image')->storeAs('property_types', $file_name, 'public');
