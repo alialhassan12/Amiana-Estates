@@ -373,7 +373,6 @@ const Penthouse = () => {
                         `}
                     >
                         <div className="space-y-6">
-                            {/* Section 1: Typography Form */}
                             <form
                                 onSubmit={handleSubmit(onEditPenthouse)}
                                 className="bg-white border border-[#ECE9E5] rounded-xl p-5 sm:p-7 shadow-xs space-y-6"

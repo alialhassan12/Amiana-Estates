@@ -346,7 +346,6 @@ const Estate = () => {
                             onSubmit={handleSubmit(onSubmit)}
                             className="bg-white border border-[#ECE9E5] rounded-xl p-5 sm:p-7 shadow-xs space-y-6"
                         >
-                            {/* Section 1: Typography */}
                             <div>
                                 <h3 className="body-text text-xs uppercase tracking-widest text-primary font-bold mb-4 flex items-center gap-2">
                                     <Sparkles className="h-3.5 w-3.5" />
@@ -354,7 +353,7 @@ const Estate = () => {
                                 </h3>
 
                                 <div className="space-y-4">
-                                    {/* Section Title (Pre-heading) */}
+                                    {/* Section Title*/}
                                     <div>
                                         <label className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
                                             Pre-Heading Category
@@ -375,7 +374,6 @@ const Estate = () => {
                                         )}
                                     </div>
 
-                                    {/* Sub Title (Main Heading) */}
                                     <div>
                                         <label className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
                                             Main Heading / Subtitle 
@@ -413,7 +411,7 @@ const Estate = () => {
                                 </div>
                             </div>
 
-                            {/* Section 2: Media Background */}
+                            {/* Media Background */}
                             <div className="border-t border-[#ECE9E5] pt-5">
                                 <h3 className="body-text text-xs uppercase tracking-widest text-primary font-bold mb-4 flex items-center gap-2">
                                     <ImageIcon className="h-3.5 w-3.5" />
@@ -503,7 +501,7 @@ const Estate = () => {
                                 </div>
                             </div>
 
-                            {/* Section 3: Calculated Statistics (Read Only) */}
+                            {/* Calculated Statistics*/}
                             <div className="border-t border-[#ECE9E5] pt-5">
                                 <div className="flex items-center justify-between mb-3">
                                     <h3 className="body-text text-xs uppercase tracking-widest text-primary font-bold flex items-center gap-2">

@@ -29,10 +29,6 @@ class PropertyType extends Model
         return null;
     }
 
-    public function properties(){
-        return $this->hasMany(Property::class);
-    }
-
     public function features(){
         return $this->hasMany(PropertyFeature::class);
     }

@@ -125,24 +125,7 @@ const ExperienceSpecifications = () => {
                                 : "Loading experience specifications..."}
                         </p>
                     </div>
-                    {/* <Select onValueChange={handleTypeChange} value={type?.toString()}>
-                        <SelectTrigger className="cursor-pointer w-full max-w-48">
-                            <SelectValue placeholder="Select property type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                            <SelectLabel>Property Type</SelectLabel>
-                                <SelectItem key={0} className="cursor-pointer" value="All" >
-                                        All
-                                </SelectItem>
-                                {types?.map((item) => (
-                                    <SelectItem key={item.id} className="cursor-pointer" value={item.title} >
-                                        {item.title}
-                                    </SelectItem>
-                                ))}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select> */}
+
                     {isFetching && !isLoadingExperienceSpecifications && (
                         <span className="inline-flex items-center gap-1.5 body-text text-[11px] text-neutral-500 uppercase tracking-wider">
                             <Loader2 className="h-3.5 w-3.5 animate-spin" />

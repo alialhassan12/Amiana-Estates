@@ -329,28 +329,6 @@ export const LocationSkeleton = ({ ref }: { ref?: React.Ref<HTMLDivElement> }) =
                     </div>
                 </div>
             </div>
-
-            {/* Proximity Cards Skeleton */}
-            {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
-                {[0, 1, 2, 3].map((i) => (
-                    <div 
-                        key={i} 
-                        className="p-6 bg-[#F4F3F0]/60 dark:bg-neutral-900/40 border border-neutral-200/70 dark:border-neutral-800/70 flex flex-col justify-between min-h-[170px]"
-                    >
-                        <div>
-                            <div className="flex items-center justify-between gap-3 mb-4">
-                                <Skeleton className="h-7 w-10 bg-primary/25" />
-                                <Skeleton className="h-4 w-16 bg-primary/20" />
-                            </div>
-                            <Skeleton className="h-5 w-3/4 bg-neutral-200 dark:bg-neutral-800" />
-                        </div>
-                        <div className="space-y-2 mt-4">
-                            <Skeleton className="h-3.5 w-full bg-neutral-200 dark:bg-neutral-800" />
-                            <Skeleton className="h-3.5 w-4/5 bg-neutral-200 dark:bg-neutral-800" />
-                        </div>
-                    </div>
-                ))}
-            </div> */}
         </div>
     );
 };
