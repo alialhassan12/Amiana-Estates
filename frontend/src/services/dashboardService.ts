@@ -9,3 +9,14 @@ export const getDashboardStats = async () => {
         return error.response.data.message;
     }
 }
+
+export const getDashboardLogs = async () => {
+    try {
+        const response = await axiosInstance.get('/dashboard/logs');
+        console.log("dashboard logs: ", response.data);
+        return response.data;
+    } catch (error: any) {
+        console.log("dashboard logs error: ", error.response.data.message);
+        return error.response.data.message;
+    }
+}
