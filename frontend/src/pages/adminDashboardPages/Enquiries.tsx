@@ -4,11 +4,20 @@ import { useGetEnquiries } from "../../hooks/useEnquiry";
 import { Pagination, type PaginatedData } from "../../components/Pagination";
 import type { Enquiry } from "../../@types/enquirye";
 import { Eye, Loader2, Search, X } from "lucide-react";
+import ViewEnquiryDialog from "../../components/admin/ViewEnquiryDialog";
 
 const Enquiries=()=>{
     const [page,setPage]=useState<number>(1);
     const [searchQuery,setSearchQuery]=useState<string>("");
     const debouncedSearch=useDebounce(searchQuery,500);
+
+    const [selectedEnquiry, setSelectedEnquiry] = useState<Enquiry | null>(null);
+    const [isViewOpen, setIsViewOpen] = useState<boolean>(false);
+
+    const handleOpenView = (enquiry: Enquiry) => {
+        setSelectedEnquiry(enquiry);
+        setIsViewOpen(true);
+    };
 
     const {data:enquiriesData,isLoading,isFetching,isError}=useGetEnquiries(true,page,debouncedSearch);
     const enquiries=enquiriesData?.enquiries as PaginatedData<Enquiry>;
@@ -57,17 +66,17 @@ const Enquiries=()=>{
                 </div>
             </div>
 
-            {/* Experience specifications table */}
+            {/* Enquiries table */}
             <section className="bg-white border border-[#ECE9E5] rounded-xl shadow-xs overflow-hidden">
                 <div className="px-4 sm:px-6 py-4 border-b border-[#ECE9E5] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                     <div>
                         <h2 className="title text-lg text-neutral-900 tracking-tight">
-                            Experience Specifications
+                            Visitor Enquiries
                         </h2>
                         <p className="body-text text-xs text-neutral-500 mt-0.5">
                             {enquiries
-                                ? `${enquiries.total} ${enquiries.total === 1 ? "experience specification" : "experience specifications"} available`
-                                : "Loading experience specifications..."}
+                                ? `${enquiries.total} ${enquiries.total === 1 ? "enquiry" : "enquiries"} received`
+                                : "Loading visitor enquiries..."}
                         </p>
                     </div>
                     {isFetching && !isLoading && (
@@ -98,22 +107,23 @@ const Enquiries=()=>{
                                         <td className="px-4 sm:px-6 py-4"><div className="h-4 w-full max-w-sm rounded bg-[#ECE9E5]" /></td>
                                         <td className="px-4 sm:px-6 py-4"><div className="h-4 w-16 rounded bg-[#ECE9E5]" /></td>
                                         <td className="px-4 sm:px-6 py-4"><div className="h-6 w-20 rounded-full bg-[#ECE9E5]" /></td>
-                                        <td className="px-4 sm:px-6 py-4"><div className="ml-auto h-7 w-16 rounded bg-[#ECE9E5]" /></td>
+                                        <td className="px-4 sm:px-6 py-4"><div className="h-4 w-40 rounded bg-[#ECE9E5]" /></td>
+                                        <td className="px-4 sm:px-6 py-4"><div className="ml-auto h-7 w-7 rounded bg-[#ECE9E5]" /></td>
                                     </tr>
                                 ))
                             ) : isError ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-12 text-center">
-                                        <p className="body-text text-sm text-neutral-700">Unable to load property features.</p>
+                                    <td colSpan={6} className="px-6 py-12 text-center">
+                                        <p className="body-text text-sm text-neutral-700">Unable to load visitor enquiries.</p>
                                         <p className="body-text text-xs text-neutral-500 mt-1">Please refresh the page and try again.</p>
                                     </td>
                                 </tr>
                             ) : rows.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-12 text-center">
-                                        <p className="body-text text-sm text-neutral-700">No property features found.</p>
+                                    <td colSpan={6} className="px-6 py-12 text-center">
+                                        <p className="body-text text-sm text-neutral-700">No enquiries found.</p>
                                         <p className="body-text text-xs text-neutral-500 mt-1">
-                                            {searchQuery ? "Try a different search term." : "Create a experience specification to begin building the residences catalogue."}
+                                            {searchQuery ? "Try a different search term." : "No visitor enquiries have been submitted yet."}
                                         </p>
                                     </td>
                                 </tr>
@@ -123,27 +133,27 @@ const Enquiries=()=>{
                                     return (
                                         <tr key={enquiry.id} className="group hover:bg-[#FAF9F6]/70 transition-colors">
                                             <td className="px-4 sm:px-6 py-4">
-                                                <p className="body-text text-sm text-neutral-600 leading-relaxed max-w-xl line-clamp-2">
+                                                <p className="body-text text-sm text-neutral-900 font-medium leading-relaxed max-w-xl line-clamp-1">
                                                     {enquiry.name}
                                                 </p>
                                             </td>
                                             <td className="px-4 sm:px-6 py-4">
-                                                <p className="body-text text-sm text-neutral-600 leading-relaxed max-w-xl line-clamp-2">
+                                                <p className="body-text text-sm text-neutral-600 leading-relaxed max-w-xl line-clamp-1">
                                                     {enquiry.email}
                                                 </p>
                                             </td>
                                             <td className="px-4 sm:px-6 py-4">
-                                                <span className="body-text text-sm text-neutral-800 whitespace-nowrap">
+                                                <span className="body-text text-sm text-neutral-800 whitespace-nowrap font-mono">
                                                     {enquiry.phone}
                                                 </span>
                                             </td>
                                             <td className="px-4 sm:px-6 py-4">
-                                                <span className="body-text text-sm text-neutral-800 whitespace-nowrap">
+                                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary/10 text-primary border border-primary/20 whitespace-nowrap">
                                                     {enquiry.interest}
                                                 </span>
                                             </td>
-                                            <td className="px-4 sm:px-6 py-4  line-clamp-2">
-                                                <span className="body-text text-sm text-neutral-800 whitespace-nowrap">
+                                            <td className="px-4 sm:px-6 py-4 max-w-xs">
+                                                <span className="body-text text-sm text-neutral-600 line-clamp-1 block" title={enquiry.message}>
                                                     {enquiry.message}
                                                 </span>
                                             </td>
@@ -153,9 +163,7 @@ const Enquiries=()=>{
                                                         type="button"
                                                         title={`View ${enquiry.name}`}
                                                         aria-label={`View ${enquiry.name}`}
-                                                        onClick={()=>{
-                                                            // handleOpenEdit(specification);
-                                                        }}
+                                                        onClick={() => handleOpenView(enquiry)}
                                                         className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-[#ECE9E5] text-neutral-600 transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary cursor-pointer"
                                                     >
                                                         <Eye className="h-3.5 w-3.5" />
@@ -182,6 +190,13 @@ const Enquiries=()=>{
                     />
                 )}
             </section>
+
+            {/* View Enquiry Details Modal */}
+            <ViewEnquiryDialog
+                enquiry={selectedEnquiry}
+                open={isViewOpen}
+                setOpen={setIsViewOpen}
+            />
         </div>
     );
 }

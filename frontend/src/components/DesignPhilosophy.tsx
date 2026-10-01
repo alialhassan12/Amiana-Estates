@@ -56,13 +56,12 @@ const DesignPhilosophy = () => {
                                 key={item.id ?? index} 
                                 className="group/card relative flex flex-col justify-between p-6 sm:p-7 bg-[#F4F3F0]/60 dark:bg-neutral-900/40 border border-neutral-200/70 dark:border-neutral-800/70 hover:border-primary/50 dark:hover:border-primary/50 hover:bg-[#F4F3F0] dark:hover:bg-neutral-900 transition-all duration-300 min-h-[170px]"
                             >
-                                <div>
+                                <div className="flex flex-col items-center justify-center text-center">
                                     {/* index number and top line */}
-                                    <div className="flex items-center justify-between gap-3 mb-4">
+                                    <div className="mb-4">
                                         <span className="title text-2xl sm:text-3xl text-primary/80 group-hover/card:text-primary transition-colors duration-300 font-normal">
                                             {String(index + 1).padStart(2, "0")}
                                         </span>
-                                        <div className="h-px flex-1 bg-neutral-200 dark:bg-neutral-800 group-hover/card:bg-primary/40 transition-colors duration-300" />
                                     </div>
 
                                     {/* title */}

@@ -12,9 +12,12 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function getDashboardStats(){
-        $totalProperties=Property::count();
+        
+        $propertyTypes=PropertyType::select('id','total_properties')->get();
 
-        $totalPropertyTypes=PropertyType::count();
+        $totalProperties=$propertyTypes->sum('total_properties');
+        
+        $totalPropertyTypes=$propertyTypes->count();
 
         $totalPenthouses=Penthouse::count();
 

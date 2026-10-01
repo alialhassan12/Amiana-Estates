@@ -3,10 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Company;
 use App\Models\Estate;
-use App\Models\Property;
-use App\Models\PropertyType;
 use App\Services\PortfolioCacheService;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;

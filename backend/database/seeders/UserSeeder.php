@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
                 'name' => 'admin',
                 'email' => 'admin@gmail.com',
                 'email_verified_at' => null,
-                'password' => '$2y$12$egm2lvGY2c4oB.DmTiflSOqD/e0VbCCO1dZtYZgZziDj1iDjftLuq',
+                'password' => '$2y$12$4JfTbe27VhPD6Ky.uQEIT.R.8Q3ljKYl3mg8.B5g.SIQg01a.qwRO', //admin@12345
                 'remember_token' => null,
                 'created_at' => '2026-09-17 08:38:49',
                 'updated_at' => '2026-09-17 08:38:49',

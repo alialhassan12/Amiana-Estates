@@ -555,20 +555,11 @@ const DesignPhilosophy = () => {
                                         >
                                             <div className="flex items-center justify-between gap-3 mb-2.5">
                                                 <div className="flex items-center gap-2">
-                                                    <GripVertical className="h-3.5 w-3.5 text-neutral-400 cursor-grab" />
                                                     <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-primary/10 text-primary uppercase tracking-wider">
                                                         Principle #{String(index + 1).padStart(2, "0")}
                                                     </span>
                                                 </div>
                                                 <div className="flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
-                                                    <button
-                                                        type="button"
-                                                    
-                                                        title="Edit principle"
-                                                        className="p-1 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 transition-colors"
-                                                    >
-                                                        <Pencil className="h-3.5 w-3.5" />
-                                                    </button>
                                                     <button
                                                         type="button"
                                                         onClick={()=>handleOpenDelete(item)}
@@ -579,7 +570,7 @@ const DesignPhilosophy = () => {
                                                     </button>
                                                 </div>
                                             </div>
-                                            <div className="space-y-1 pl-5">
+                                            <div className="space-y-1">
                                                 <h4 className="title uppercase text-xs sm:text-sm font-medium text-neutral-900 tracking-wide">
                                                     {item.title}
                                                 </h4>

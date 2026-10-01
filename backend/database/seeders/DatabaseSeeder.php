@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
             CompanySeeder::class,
             EstateSeeder::class,
             PropertyTypeSeeder::class,
-            PropertySeeder::class,
             PropertyFeatureSeeder::class,
             ResidenceSeeder::class,
             PenthouseSeeder::class,
@@ -32,6 +31,8 @@ class DatabaseSeeder extends Seeder
             ExperienceSpecificationSeeder::class,
             DesignPhilosophySeeder::class,
             DesignPhilosophyPrincipleSeeder::class,
+            DifferenceSeeder::class,
+            SocialSeeder::class,
             LocationSeeder::class,
         ]);
     }
