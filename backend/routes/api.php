@@ -53,6 +53,7 @@ Route::middleware('auth:sanctum')->group(function(){
     
     // dashboard
     Route::get('/dashboard',[DashboardController::class,'getDashboardStats'])->name('dashboard.stats');
+    Route::get('/dashboard/logs',[DashboardController::class,'getDashboardLogs'])->name('dashboard.logs');
     
     // hero
     Route::post('/hero/create',[HeroController::class,'insert'])->name('hero.create');
@@ -128,4 +129,5 @@ Route::middleware('auth:sanctum')->group(function(){
 
     // enquiries
     Route::get('/enquiries',[EnquiryController::class,'getEnquiries'])->name('get.enquiries');
+
 });

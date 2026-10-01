@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\ExperienceSpecification;
 use App\Models\Penthouse;
 use App\Models\Property;
@@ -28,6 +29,15 @@ class DashboardController extends Controller
             'totalPropertyTypes'=>$totalPropertyTypes,
             'totalPenthouses'=>$totalPenthouses,
             'totalExperienceSpecifications'=>$experienceSpecification
+        ]);
+    }
+
+    public function getDashboardLogs(){
+        $activityLogs=ActivityLog::with('user')->latest()->limit(10)->get();
+
+        return response()->json([
+            'message'=>'Dashboard Logs Fetched Successfully',
+            'activityLogs'=>$activityLogs
         ]);
     }
 }
