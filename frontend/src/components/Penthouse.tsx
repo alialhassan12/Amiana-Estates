@@ -65,7 +65,7 @@ const Penthouse = () => {
                 </div>
             )}
 
-            {/* monograph filmstrip carousel gallery */}
+            {/* monograph carousel gallery */}
             <div data-aos="fade-up" data-aos-delay="300" className="mt-8 sm:mt-12 w-full">
                 <Gallery media={media} />
             </div>

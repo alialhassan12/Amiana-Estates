@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import mapboxgl from "mapbox-gl";
+import { useEffect, useState } from "react";
 import {
     Building2,
     Mail,
@@ -7,19 +6,8 @@ import {
     MapPin,
     Lock,
     Save,
-    Search,
     Globe,
-    Check,
-    Copy,
-    Compass,
-    Eye,
-    EyeOff,
-    RotateCcw,
-    Shield,
-    ExternalLink,
-    AlertCircle,
     Loader2,
-    X,
     Plus,
     Pencil,
     Trash2,
@@ -32,7 +20,6 @@ import AddSocialDialog from "../../components/admin/AddSocialDialog";
 import type { Social } from "../../@types/social";
 import DeleteAlertDialog from "../../components/admin/DeleteAlertDialog";
 import EditSocialDialog from "../../components/admin/EditSocialDialog";
-import { useGetLocation } from "../../hooks/useLocation";
 import LocationSettingsTab from "../../components/admin/LocationSettingsTab";
 import SecuritySettingsTab from "../../components/admin/SecuritySettingsTab";
 
@@ -43,10 +30,8 @@ type TabKey = "company" | "contact" | "location" | "security";
 const Settings = () => {
     const [activeTab, setActiveTab] = useState<TabKey>("company");
 
-    // -------------------------------------------------------------
-    // 1. Company Profile State
-    // -------------------------------------------------------------
-    const {data:company,isLoading:isCompanyLoading}=useGetCompanyInfo(activeTab === 'company' || activeTab === 'contact');
+    // Company States
+    const {data:company}=useGetCompanyInfo(activeTab === 'company' || activeTab === 'contact');
     const {mutateAsync:updateCompany, isPending:isCompanyUpdating}=useUpdateCompany();
     const [companyName, setCompanyName] = useState(company?.name || "");
     const isCompanyNameEdited=companyName.trim() !== (company?.name || "").trim();
@@ -76,9 +61,7 @@ const Settings = () => {
         }
     },[company]);
     
-    // -------------------------------------------------------------
-    // 2. Contact Informatio
-    // -------------------------------------------------------------
+    // Contact Informatio
     const [primaryEmail, setPrimaryEmail] = useState(company?.contact_email || "");
     const [primaryPhone, setPrimaryPhone] = useState(company?.contact_phone || "");
     const isEmailEdited=primaryEmail.trim() !== (company?.contact_email || "").trim();
@@ -112,9 +95,7 @@ const Settings = () => {
         }
     },[company]);
 
-    // -------------------------------------------------------------
-    // 3. Social Media State
-    // -------------------------------------------------------------
+    // Social States
 
     const {data:socials}=useGetSocials(activeTab === "contact");
     const [openAddSocial,setOpenAddSocial]=useState<boolean>(false);
@@ -224,7 +205,7 @@ const Settings = () => {
                 </button>
             </div>
 
-            {/* Tab 1: Company Profile */}
+            {/* Tab 1 Company */}
             {activeTab === "company" && (
 
                 <section className="bg-white border border-[#ECE9E5] rounded-xl p-5 sm:p-7 shadow-xs">
@@ -268,7 +249,7 @@ const Settings = () => {
                 </section>
             )}
 
-            {/* Tab 2: Contact & Socials */}
+            {/* Tab 2 Contact & Socials */}
             {activeTab === "contact" && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {/* Contact Channels */}
@@ -408,12 +389,12 @@ const Settings = () => {
                 </div>
             )}
 
-            {/* Tab 3: Location & Mapbox Integration */}
+            {/* Tab 3 Location & Mapbox Integration */}
             {activeTab === "location" && (
                 <LocationSettingsTab activeTab={activeTab} />
             )}
 
-            {/* Tab 4: Security & Change Password */}
+            {/* Tab 4 Security & Change Password */}
             {activeTab === "security" && (
                 <SecuritySettingsTab/>
             )}

@@ -384,7 +384,7 @@ const Experience = () => {
                         `}
                     >
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                            {/* PART 1: Section Header & Card 1 (Architectural Premise) */}
+                            {/*Section Header & Card 1 */}
                             <div className="bg-white border border-[#ECE9E5] rounded-xl p-5 sm:p-7 shadow-xs space-y-6">
                                 <div className="flex items-center justify-between pb-3 border-b border-[#ECE9E5]">
                                     <h3 className="body-text text-xs uppercase tracking-widest text-primary font-bold flex items-center gap-2">
@@ -563,7 +563,7 @@ const Experience = () => {
                                 </div>
                             </div>
 
-                            {/* PART 2: Specifications Overview & Navigation Button */}
+                            {/* Specifications Overview */}
                             <div className="bg-white border border-[#ECE9E5] rounded-xl p-5 sm:p-7 shadow-xs space-y-6">
                                 <div className="flex items-center justify-between pb-3 border-b border-[#ECE9E5]">
                                     <h3 className="body-text text-xs uppercase tracking-widest text-primary font-bold flex items-center gap-2">
@@ -668,7 +668,7 @@ const Experience = () => {
                                 </div>
                             </div>
 
-                            {/* PART 3: Card 2 (Wellness Retreat) */}
+                            {/*Card 2*/}
                             <div className="bg-white border border-[#ECE9E5] rounded-xl p-5 sm:p-7 shadow-xs space-y-6">
                                 <div className="flex items-center justify-between pb-3 border-b border-[#ECE9E5]">
                                     <h3 className="body-text text-xs uppercase tracking-widest text-primary font-bold flex items-center gap-2">

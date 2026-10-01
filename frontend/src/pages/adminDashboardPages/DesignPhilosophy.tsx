@@ -383,7 +383,6 @@ const DesignPhilosophy = () => {
                             onSubmit={handleSubmit(onSubmit)}
                             className="bg-white border border-[#ECE9E5] rounded-xl p-5 sm:p-7 shadow-xs space-y-7"
                         >
-                            {/* */}
                             <div className="space-y-6">
                                 <div>
                                     <h3 className="body-text text-xs uppercase tracking-widest text-primary font-bold mb-4 flex items-center gap-2">
@@ -392,7 +391,6 @@ const DesignPhilosophy = () => {
                                     </h3>
 
                                     <div className="space-y-4">
-                                        {/* */}
                                         <div>
                                             <label className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
                                                 Pre-Heading Category
@@ -413,7 +411,6 @@ const DesignPhilosophy = () => {
                                             )}
                                         </div>
 
-                                        {/* */}
                                         <div>
                                             <label className="block uppercase body-text text-[11px] font-semibold tracking-wider text-neutral-700 mb-1.5">
                                                 Main Headline / Subtitle

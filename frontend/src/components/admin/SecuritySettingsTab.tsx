@@ -240,7 +240,7 @@ const SecuritySettingsTab=()=>{
                                                 : "bg-neutral-100 text-neutral-400"
                                         }`}
                                     >
-                                        ✓
+                                        <Check className="h-2.5 w-2.5" />
                                     </span>
                                     At least 8 characters
                                 </li>
@@ -252,7 +252,7 @@ const SecuritySettingsTab=()=>{
                                                 : "bg-neutral-100 text-neutral-400"
                                         }`}
                                     >
-                                        ✓
+                                        <Check className="h-2.5 w-2.5" />
                                     </span>
                                     At least one uppercase letter (A-Z)
                                 </li>
@@ -264,7 +264,7 @@ const SecuritySettingsTab=()=>{
                                                 : "bg-neutral-100 text-neutral-400"
                                         }`}
                                     >
-                                        ✓
+                                        <Check className="h-2.5 w-2.5" />
                                     </span>
                                     At least one number (0-9)
                                 </li>
@@ -276,7 +276,7 @@ const SecuritySettingsTab=()=>{
                                                 : "bg-neutral-100 text-neutral-400"
                                         }`}
                                     >
-                                        ✓
+                                        <Check className="h-2.5 w-2.5" />
                                     </span>
                                     At least one special character (!@#$%)
                                 </li>

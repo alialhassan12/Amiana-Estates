@@ -69,9 +69,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/property/types/edit',[PropertyTypesController::class,'editPropertyType'])->name('property.types.edit');
     Route::delete('/property/types/delete/{id}',[PropertyTypesController::class,'deletePropertyType'])->name('property.types.delete');
     
-    // property
-    Route::post('/property/create',[PropertyController::class,'insert'])->name('property.create');
-
     // property features
     Route::get('/property/types/features',[PropertyTypesController::class,'getPropertyTypesForFeatures'])->name('property.types.features.get');
     Route::post('/property/features/create',[PropertyFeaturesController::class,'insert'])->name('property.features.create');

@@ -300,7 +300,7 @@ const Residence = () => {
                             onSubmit={handleSubmit(onSubmit)}
                             className="bg-white border border-[#ECE9E5] rounded-xl p-5 sm:p-7 shadow-xs space-y-6"
                         >
-                            {/* Section 1: Typography */}
+
                             <div>
                                 <h3 className="body-text text-xs uppercase tracking-widest text-primary font-bold mb-4 flex items-center gap-2">
                                     <Sparkles className="h-3.5 w-3.5" />
@@ -349,7 +349,6 @@ const Residence = () => {
                                 </div>
                             </div>
 
-                            {/* Section 2: Property Types */}
                             <div className="border-t border-[#ECE9E5] pt-5">
                                 <div className="flex items-center justify-between mb-3">
                                     <h3 className="body-text text-xs uppercase tracking-widest text-primary font-bold flex items-center gap-2">

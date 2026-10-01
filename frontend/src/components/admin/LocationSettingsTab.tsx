@@ -48,8 +48,6 @@ const LocationSettingsTab=({activeTab})=>{
         }
     }
 
-
-    const [zoom, setZoom] = useState<number>(15);
     const [copiedCoords, setCopiedCoords] = useState(false);
 
     // Mapbox Geocoding Search
@@ -62,9 +60,7 @@ const LocationSettingsTab=({activeTab})=>{
     const mapRef = useRef<mapboxgl.Map | null>(null);
     const markerRef = useRef<mapboxgl.Marker | null>(null);
     
-    // -------------------------------------------------------------
     // Initialize Mapbox Map
-    // -------------------------------------------------------------
     useEffect(() => {
         if (activeTab !== "location") return;
         if (!mapContainerRef.current) return;
@@ -87,7 +83,7 @@ const LocationSettingsTab=({activeTab})=>{
             container: mapContainerRef.current,
             style: "mapbox://styles/mapbox/standard",
             center: [lng, lat],
-            zoom: zoom,
+            zoom: 15,
             pitch: 35,
             bearing: -10,
             attributionControl: false,
@@ -149,9 +145,7 @@ const LocationSettingsTab=({activeTab})=>{
         }
     }, [activeTab]);
 
-    // -------------------------------------------------------------
     // Geocoding Search via Mapbox API
-    // -------------------------------------------------------------
     const handleSearchLocation = async (queryText: string) => {
         setSearchQuery(queryText);
         if (!queryText.trim() || queryText.trim().length < 3) {
@@ -433,7 +427,7 @@ const LocationSettingsTab=({activeTab})=>{
                 </section>
             </div>
 
-            {/* Right: Map Container */}
+            {/* Map Container */}
             <div className="lg:col-span-2">
                 <section className="bg-white border border-[#ECE9E5] rounded-xl overflow-hidden shadow-xs h-full flex flex-col">
                     {/* Map Card Header */}
